@@ -2,3 +2,4 @@
 stwBD.lock.db
 stwBD.mv.db
 stwBD.trace.db
+/STWGpus/src/main/resources/META-INF/persistence.xml
