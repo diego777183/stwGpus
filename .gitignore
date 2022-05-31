@@ -1,1 +1,4 @@
 /STWGpus/target/
+stwBD.lock.db
+stwBD.mv.db
+stwBD.trace.db
