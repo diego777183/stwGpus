@@ -8,7 +8,7 @@
     <class>demo.bd.Producto</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:h2:C:\Users\Diego\Documents\GitHub\stwGpus\stwBD"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:h2:D:\Archivos_GitHub\stwGpus\STWGpus\stwBD"/>
       <property name="javax.persistence.jdbc.user" value="stw"/>
       <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
       <property name="javax.persistence.jdbc.password" value="stw"/>
