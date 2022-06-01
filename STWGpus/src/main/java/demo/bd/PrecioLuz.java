@@ -17,12 +17,12 @@ import javax.persistence.ManyToOne;
  * @author fserna
  */
 @Entity
-public class Pedido implements Serializable {
+public class PrecioLuz implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-     Long id;
+    private Long id;
     
     private Long fecha;
     
