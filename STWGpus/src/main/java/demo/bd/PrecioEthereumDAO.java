@@ -34,7 +34,7 @@ public class PrecioEthereumDAO extends AbstractFacade<PrecioEthereum> {
      * Comprueba si el producto indicado figura en algún pedido.
      * @param _producto
      * @return 
-     */
+     *//*
     public boolean existePedidoDeProducto (Producto _producto){
         boolean existe = false;
         Query query = em.createQuery("SELECT p FROM Pedido p WHERE p.producto.id=:idProducto");
@@ -43,6 +43,22 @@ public class PrecioEthereumDAO extends AbstractFacade<PrecioEthereum> {
             existe = true;
         }
         return existe;
-    }
+    }*/
     
 }
+/*
+
+Timer
+
+Timer timer = new Timer();
+TimerTask timerTask = new TimerTask();
+
+{
+    public void run(){
+        metodo a ejecutar
+        
+    }
+};
+timer.schedule(minertask, 20, 5000); //segundo parametro, cada cuando empieza, segundo parametro, cada cuanto lo repite
+
+*/

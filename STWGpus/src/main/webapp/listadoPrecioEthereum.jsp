@@ -42,7 +42,7 @@
     </head>
     <body>
         <%@include file="WEB-INF/jspf/cabecera.jspf" %>
-        >>> <a href="<%=response.encodeURL("index.jsp")%>">Inicio</a> >>> <b>Listado de Precios de la Luz</b>
+        >>> <a href="<%=response.encodeURL("index.jsp")%>">Inicio</a> >>> <b>Listado de Precios de Ethereum</b>
         <hr>
         <br>
         <b>Histórico de precios de Ethereum</b>
@@ -80,5 +80,6 @@
                 <td align="right"><b><%=Util.getNumberFormatted(total, "#,###,##0.00")%> €</b></td>
             </tr>
         </table>
+                
     </body>
 </html>

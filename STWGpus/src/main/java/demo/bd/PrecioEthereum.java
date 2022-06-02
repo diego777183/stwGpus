@@ -5,7 +5,15 @@
  */
 package demo.bd;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.net.URI;
+import java.net.http.*;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.json.JsonObject;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,18 +31,51 @@ public class PrecioEthereum implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
     private Long fecha;
-    
-    //
     private Producto producto;
     private Integer numUnidades;
     private Double precio;
-
     @ManyToOne
     private Cliente cliente;
 
-    public Long getId() {
+    public final static String URL = "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd";
+    
+    private Date fechaPrecio;
+
+    //Constructor usado en addprecioethereumdao
+    public PrecioEthereum(Double precio, Date fechaPrecio) {
+        this.precio = precio;
+        this.fechaPrecio = fechaPrecio;
+    }
+    
+        
+    public BigDecimal obtenerPrecioAPI() throws IOException, InterruptedException{
+        HttpClient httpClient = HttpClient.newBuilder().
+                        version(HttpClient.Version.HTTP_2).build();
+        
+        HttpRequest request = HttpRequest.newBuilder().
+                        GET().uri(URI.create(URL)).build();
+        
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        JSONObject json = new JSONObject(response.body());
+        JSONObject json2 = (JSONObject) json.get("ethereum");
+
+        BigDecimal precio = (BigDecimal) json2.get("usd");
+        System.out.println("Precio Ethereum: " + precio);
+
+        return precio;
+    }
+   
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
+    }
+    
+        public Long getId() {
         return id;
     }
 
@@ -71,14 +112,16 @@ public class PrecioEthereum implements Serializable {
     public void setNumUnidades(Integer numUnidades) {
         this.numUnidades = numUnidades;
     }
-
-    public Double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(Double precio) {
-        this.precio = precio;
-    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 
     @Override
