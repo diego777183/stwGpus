@@ -26,9 +26,10 @@ public class PrecioEthereumDAO extends AbstractFacade<PrecioEthereum> {
         return em;
     }
 
-    public PrecioEthereumDAO() {
-        super(PrecioEthereum.class);
+    public PrecioEthereumDAO(){
+        super (PrecioEthereum.class);
     }
+    
     
     /**
      * Comprueba si el producto indicado figura en algún pedido.
@@ -43,22 +44,6 @@ public class PrecioEthereumDAO extends AbstractFacade<PrecioEthereum> {
             existe = true;
         }
         return existe;
-    }*/
-    
-}
-/*
-
-Timer
-
-Timer timer = new Timer();
-TimerTask timerTask = new TimerTask();
-
-{
-    public void run(){
-        metodo a ejecutar
-        
     }
-};
-timer.schedule(minertask, 20, 5000); //segundo parametro, cada cuando empieza, segundo parametro, cada cuanto lo repite
-
-*/
+    */
+}
