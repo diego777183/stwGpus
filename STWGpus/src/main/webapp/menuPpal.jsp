@@ -55,7 +55,7 @@
         <%@include file="WEB-INF/jspf/cabecera.jspf" %>
    
         <div style="background-color: red; color:white; font-size:large;">${msg}</div>
-        
+        <p>Hola <%=usuario.getNombre()%> </p>
         
 <%
     session.setAttribute("msg", null);
