@@ -27,12 +27,11 @@ public class PrecioLuz implements Serializable {
     private Long fecha;
     
     //
-    private Producto producto;
+
     private Integer numUnidades;
     private Double precio;
 
-    @ManyToOne
-    private Cliente cliente;
+
 
     
     
@@ -44,13 +43,9 @@ public class PrecioLuz implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public Cliente getCliente() {
-        return cliente;
-    }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+
+
     public Long getFecha() {
         return fecha;
     }
@@ -59,13 +54,7 @@ public class PrecioLuz implements Serializable {
         this.fecha = fecha;
     }
 
-    public Producto getProducto() {
-        return producto;
-    }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
-    }
     
     public Integer getNumUnidades() {
         return numUnidades;
@@ -91,22 +80,10 @@ public class PrecioLuz implements Serializable {
         return hash;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Pedido)) {
-            return false;
-        }
-        Pedido other = (Pedido) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {
-        return "demo.bd.Pedido[ id=" + id + " ]";
+        return "demo.bd.PrecioLuz[ id=" + id + " ]";
     }
     
 }

@@ -10,15 +10,9 @@
 <%@page import="demo.bd.PrecioLuzDAO"%>
 <%@page import="demo.util.Util"%>
 <%@page import="demo.util.Time"%>
-<%@page import="demo.bd.Pedido"%>
-<%@page import="demo.bd.PedidoDAO"%>
-<%@page import="demo.bd.Producto"%>
-<%@page import="demo.bd.ProductoDAO"%>
-<%@page import="demo.bd.Cliente"%>
 <%@page import="javax.naming.InitialContext"%>
 <%@page import="javax.naming.Context"%>
 <%@page import="javax.naming.Context"%>
-<%@page import="demo.bd.ClienteDAO"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -58,15 +52,7 @@
                 for (PrecioLuz p: preciosDAO.findAll()) { 
                     total += p.getPrecio();
             %>
-            <tr>
-                <td><%=p.getId()%></td>
-                <td><%=Time.getDDMMYYYY(p.getFecha())%>@<%=Time.getHHMMSS(p.getFecha())%></td>
-                <td><%=p.getCliente().getNombre()%> <%=p.getCliente().getAp1()%></td>
-                <td align="right"><%=p.getNumUnidades()%></td>
-                <td><%=p.getProducto().getNombre()%></td>
-                <td align="right"><%=p.getProducto().getPrecioUnitario()%> €</td>
-                <td align="right"><%=Util.getNumberFormatted(p.getPrecio(), "#,###,##0.00")%> €</td>
-            </tr>
+           
             <% } %>
             <tr style="background-color:blue; color:white">
                 <td></td>

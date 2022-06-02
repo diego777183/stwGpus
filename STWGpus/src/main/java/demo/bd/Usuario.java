@@ -5,9 +5,11 @@
  */
 package demo.bd;
 
+import com.google.gson.Gson;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,71 +21,73 @@ import javax.persistence.OneToMany;
  * @author Usuario
  */
 @Entity
-public class Cliente implements Serializable {
+public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    @Column(unique=true) private String login;
+    private String password;
     private String nombre;
     private String ap1;
     private Double saldo;
     
-    @OneToMany (mappedBy = "cliente",
-                cascade = CascadeType.ALL, 
-                orphanRemoval = true)
-    private List<Pedido> pedidos;
+
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long _id) {
+        this.id = _id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String _login) {
+        this.login = _login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String _password) {
+        this.password = _password;
+    }
     
 
+    
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombre(String _nombre) {
+        this.nombre = _nombre;
     }
 
     public String getAp1() {
         return ap1;
     }
 
-    public void setAp1(String ap1) {
-        this.ap1 = ap1;
+    public void setAp1(String _ap1) {
+        this.ap1 = _ap1;
     }
 
     public Double getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(Double saldo) {
-        this.saldo = saldo;
+    public void setSaldo(Double _saldo) {
+        this.saldo = _saldo;
     }
     
-    
-    public List<Pedido> getPedidos(){
-        return this.pedidos;
-    }
-    public void setPedidos (List<Pedido> _pedidos){
-        this.pedidos = _pedidos;
-    }
-    
-    public void addPedido(Pedido _p){
-        this.pedidos.add(_p);
-    }
-    
-    public void removePedido(Pedido _p){
-        this.pedidos.remove(_p);
-    }
     
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Override
     public int hashCode() {
@@ -95,10 +99,10 @@ public class Cliente implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cliente)) {
+        if (!(object instanceof Usuario)) {
             return false;
         }
-        Cliente other = (Cliente) object;
+        Usuario other = (Usuario) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -111,7 +115,17 @@ public class Cliente implements Serializable {
     }
     
     
+    public String toJson(){
+        return new Gson().toJson(this);
+    }
     
     
     
+    public boolean soyAdmin(){
+        boolean soyAdmin = false;
+        if (this.login.equals("admin")){
+            soyAdmin=true;
+        }
+        return soyAdmin;
+    }
 }

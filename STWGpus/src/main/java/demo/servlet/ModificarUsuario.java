@@ -5,8 +5,8 @@
  */
 package demo.servlet;
 
-import demo.bd.Producto;
-import demo.bd.ProductoDAO;
+import demo.bd.Usuario;
+import demo.bd.UsuarioFacade;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -14,15 +14,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author fsern
  */
-@WebServlet(name = "AddProducto", urlPatterns = {"/addProducto"})
-public class AddProducto extends HttpServlet {
+@WebServlet(name = "ModificarUsuario", urlPatterns = {"/modificarUsuario"})
+public class ModificarUsuario extends HttpServlet {
 
-    @EJB ProductoDAO productoDB;
+    @EJB UsuarioFacade usuarioDAO;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,17 +38,37 @@ public class AddProducto extends HttpServlet {
             throws ServletException, IOException {
         
         request.setCharacterEncoding("UTF-8"); // <<=== NECESARIO para que funcionen las tildes, Ñs, etc... 
+        HttpSession session = request.getSession();
         
-        String nombre   = request.getParameter("nombre");
-        Double precioU    = Double.valueOf(request.getParameter("precioU"));
+        Long id         = (Long)(session.getAttribute("idUsuario"));
         
-        Producto p = new Producto();
-        p.setNombre(nombre);
-        p.setPrecioUnitario(precioU);
-       
-        productoDB.create(p);
+        if (id!=null){
+            String login    = request.getParameter("login");
+            String pwd      = request.getParameter("pwd");
+            String nombre   = request.getParameter("nombre");
+            String ap1      = request.getParameter("ap1");
+            
+            Usuario u = usuarioDAO.find(id);
+            if (u!=null){
+                System.out.println("==a==> "+u.toJson());
+                u.setId(id);
+                u.setLogin(login);
+                u.setPassword(pwd);
+                u.setNombre(nombre);
+                u.setAp1(ap1);
+                usuarioDAO.edit(u);
+
+                System.out.println("==b==> "+u.toJson());
+            }
+
+
+            request.getSession().setAttribute("msg", "El usuario '"+u.getLogin()+"' ha sido modificado.");
+            response.sendRedirect(response.encodeURL("verMensajesRecibidos.jsp"));
         
-        response.sendRedirect(response.encodeRedirectURL("menuProductos.jsp"));
+        }else{
+            session.setAttribute("msg", "ERROR: La sesión ha caducado.");
+            response.sendRedirect(response.encodeURL("index.jsp"));
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

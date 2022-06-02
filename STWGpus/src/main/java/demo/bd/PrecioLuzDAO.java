@@ -29,20 +29,6 @@ public class PrecioLuzDAO extends AbstractFacade<PrecioLuz> {
     public PrecioLuzDAO() {
         super(PrecioLuz.class);
     }
-    
-    /**
-     * Comprueba si el producto indicado figura en algún pedido.
-     * @param _producto
-     * @return 
-     */
-    public boolean existePedidoDeProducto (Producto _producto){
-        boolean existe = false;
-        Query query = em.createQuery("SELECT p FROM Pedido p WHERE p.producto.id=:idProducto");
-        query.setParameter("idProducto", _producto.getId());
-        if (query.getResultList().size() > 0){
-            existe = true;
-        }
-        return existe;
-    }
+
     
 }

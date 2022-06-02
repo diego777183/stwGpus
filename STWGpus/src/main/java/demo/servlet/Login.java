@@ -1,13 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package demo.servlet;
 
-import demo.bd.PedidoDAO;
-import demo.bd.Producto;
-import demo.bd.ProductoDAO;
+import demo.bd.Usuario;
+import demo.bd.UsuarioFacade;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -19,13 +17,13 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author fsern
+ * @author usuario
  */
-@WebServlet(name = "EliminarProducto", urlPatterns = {"/eliminarProducto"})
-public class EliminarProducto extends HttpServlet {
+@WebServlet(name = "Login", urlPatterns = {"/login"})
+public class Login extends HttpServlet {
 
-    @EJB ProductoDAO productoDB;
-    @EJB PedidoDAO pedidoDB;
+    @EJB UsuarioFacade clienteDAO;
+    
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,25 +36,26 @@ public class EliminarProducto extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        HttpSession session = request.getSession(true);
         
-        Long id = Long.valueOf(request.getParameter("id"));
+        HttpSession session = request.getSession();
         
-        Producto p  = productoDB.find(id);
-        if (p !=null){
-            try{
-                if ( ! pedidoDB.existePedidoDeProducto(p)){
-                    productoDB.remove(p);
-                }else{
-                    session.setAttribute("msg", "ERROR: No puede eliminarse este producto porque figura en un pedido.");
-                }
-            }catch(javax.persistence.PersistenceException e){
-                session.setAttribute("msg", "ERROR: No puede eliminarse este producto.");
-            }
+        String login    = request.getParameter("login");
+        String pwd      = request.getParameter("pwd");
+        
+            
+        Usuario usuario = clienteDAO.checkAutenticacion(login, pwd);
+        if (usuario!=null){
+            session.setAttribute("idUsuario", usuario.getId());
+            session.setAttribute("msg", null);
+            response.sendRedirect(response.encodeURL("menuPpal.jsp"));
+        }else{
+            session.setAttribute("idUsuario", null);
+            session.setAttribute("msg", "ERROR en la autenticación.");
+            response.sendRedirect(response.encodeURL("index.jsp"));
         }
         
-        response.sendRedirect(response.encodeRedirectURL("menuProductos.jsp"));
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

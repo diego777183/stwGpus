@@ -1,10 +1,12 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package demo.servlet;
 
-import demo.bd.Cliente;
-import demo.bd.ClienteDAO;
-import demo.bd.Pedido;
-import demo.bd.PedidoDAO;
+import demo.bd.Usuario;
+import demo.bd.UsuarioFacade;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -12,17 +14,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author fsern
  */
-@WebServlet(name = "EliminarPedido", urlPatterns = {"/eliminarPedido"})
-public class EliminarPedido extends HttpServlet {
+@WebServlet(name = "AddUsuario", urlPatterns = {"/addUsuario"})
+public class AddUsuario extends HttpServlet {
 
-    @EJB PedidoDAO pedidoDB;
-    @EJB ClienteDAO clienteDB;
+    @EJB UsuarioFacade clienteDB;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,30 +35,24 @@ public class EliminarPedido extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        HttpSession session = request.getSession(true);
         
-        Long idCliente = Long.valueOf(request.getParameter("idCliente"));
-        Long idPedido = Long.valueOf(request.getParameter("idPedido"));
+        request.setCharacterEncoding("UTF-8"); // <<=== NECESARIO para que funcionen las tildes, Ñs, etc... 
         
-        Pedido p  = pedidoDB.find(idPedido);
-        if (p !=null){
-            try{
-                Cliente cliente = p.getCliente();
-                cliente.removePedido(p);
-                
-                cliente.setSaldo(cliente.getSaldo()+p.getPrecio());
-                clienteDB.edit(cliente);
-                
-                pedidoDB.remove(p);
-            }catch(javax.persistence.PersistenceException e){
-                session.setAttribute("msg", "ERROR: No puede eliminarse este pedido.");
-            }
-        }else{
-            session.setAttribute("msg", "ERROR: No puede eliminarse un pedido que no existe.");
-        }
+        String login    = request.getParameter("login");
+        String pwd      = request.getParameter("pwd");
+        String nombre   = request.getParameter("nombre");
+        String ap1      = request.getParameter("ap1");
+
         
-        response.sendRedirect(response.encodeURL("menuPedidosCliente.jsp?id="+idCliente));
+        Usuario c = new Usuario();
+        c.setLogin(login);
+        c.setPassword(pwd);
+        c.setNombre(nombre);
+        c.setAp1(ap1);
+        
+        clienteDB.create(c);
+        
+        response.sendRedirect(response.encodeRedirectURL("index.jsp"));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
