@@ -38,16 +38,14 @@ public class AddPrecioEthereum extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, InterruptedException {
         
         request.setCharacterEncoding("UTF-8"); // <<=== NECESARIO para que funcionen las tildes, Ñs, etc... 
-        
-        Date fecha = Calendar.getInstance().getTime();
-        
-        
-        double precio   = 2.2;//obtener el precio de la api
 
-        PrecioEthereum p = new PrecioEthereum(precio, fecha);
+        PrecioEthereum p = new PrecioEthereum();
+
+        p.setFecha(System.currentTimeMillis());
+        p.setPrecio(p.getPrecio());
         
         precioEthDB.create(p);
         

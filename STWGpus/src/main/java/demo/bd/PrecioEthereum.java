@@ -46,9 +46,13 @@ public class PrecioEthereum implements Serializable {
     private Date fechaPrecio;
 
     //Constructor usado en addprecioethereumdao
-    public PrecioEthereum(Double precio, Date fechaPrecio) {
+    public PrecioEthereum(Double precio, Long fechaPrecio) {
         this.precio = precio;
-        this.fechaPrecio = fechaPrecio;
+        this.fecha = fecha;
+    }
+
+    public PrecioEthereum() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
         
