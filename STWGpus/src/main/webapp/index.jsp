@@ -36,12 +36,6 @@
         <h3>Ejemplo de OneToMany con JPA</h3>
         
         <br>
-<<<<<<< HEAD
-        <a href="<%=response.encodeRedirectURL("menuProductos.jsp")%>">Productos</a> | 
-        <a href="<%=response.encodeRedirectURL("menuClientes.jsp")%>">Clientes</a> | 
-        <a href="<%=response.encodeRedirectURL("listadoPedidos.jsp")%>">Listado de Pedidos</a>
-
-=======
 
         
         <select name="color" id="color" onchange="location = this.value;">
@@ -78,6 +72,5 @@
    
 
         
->>>>>>> pruebas
     </body>
 </html>

@@ -36,29 +36,35 @@
     </head>
     <body>
         <%@include file="WEB-INF/jspf/cabecera.jspf" %>
-        >>> <a href="<%=response.encodeURL("index.jsp")%>">Inicio</a> >>> <b>Listado de Precios de Ethereum</b>
+        >>> <a href="<%=response.encodeURL("index.jsp")%>">Inicio</a> >>> <b>Listado de Precios de la Luz</b>
         <hr>
         <br>
         <b>Histórico de precios de Ethereum</b>
         <table border="1">
             <tr style="background-color:blue; color:white">
+                <td>Id</td>
                 <td>Fecha</td>
-                <td>Precio</td>
+                <td>Cliente</td>
+                <td>Núm.Unidades</td>
+                <td>Producto</td>
+                <td>PVP Unidad</td>
+                <td>PVP Total</td>
             </tr>
             <%  Double total = 0.0;
                 for (PrecioEthereum p: preciosEthereumDAO.findAll()) { 
                     total += p.getPrecio();
             %>
-<<<<<<< HEAD
-            <tr>
-                <td><%=Time.getDDMMYYYY(p.getFecha())%>@<%=Time.getHHMMSS(p.getFecha())%></td>
-                <td align="right"><%=Util.getNumberFormatted(p.getPrecio(), "#,###,##0.00")%> €</td>
-            </tr>
-=======
         
->>>>>>> pruebas
             <% } %>
-
+            <tr style="background-color:blue; color:white">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td align="right"><b><%=Util.getNumberFormatted(total, "#,###,##0.00")%> €</b></td>
+            </tr>
         </table>
     </body>
 </html>
