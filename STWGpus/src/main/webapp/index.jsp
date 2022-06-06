@@ -5,11 +5,10 @@
 --%>
 
 
-<%@page import="demo.bd.Cliente"%>
+
 <%@page import="javax.naming.InitialContext"%>
 <%@page import="javax.naming.Context"%>
 <%@page import="javax.naming.Context"%>
-<%@page import="demo.bd.ClienteDAO"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -37,9 +36,48 @@
         <h3>Ejemplo de OneToMany con JPA</h3>
         
         <br>
+<<<<<<< HEAD
         <a href="<%=response.encodeRedirectURL("menuProductos.jsp")%>">Productos</a> | 
         <a href="<%=response.encodeRedirectURL("menuClientes.jsp")%>">Clientes</a> | 
         <a href="<%=response.encodeRedirectURL("listadoPedidos.jsp")%>">Listado de Pedidos</a>
 
+=======
+
+        
+        <select name="color" id="color" onchange="location = this.value;">
+          <option value="">Seleccione historico de Precios</option>    
+          <option value="<%=response.encodeRedirectURL("listadoPrecioLuz.jsp")%>">Listado de Precios de la Luz</option>
+          <option value="<%=response.encodeRedirectURL("listadoPrecioEthereum.jsp")%>">Listado de Precios de Ethereum</option>
+        </select>
+        <br><br><br><br>
+        <form method="POST" action="<%=response.encodeURL("login")%>">
+            <table>
+                <tr>
+                    <td>Login:</td>
+                    <td><input name="login"></td>
+                </tr>
+                <tr>
+                    <td>Contraseña:</td>
+                    <td><input type="password" name="pwd"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Login"></td>
+                </tr>
+            </table>
+        
+        </form>
+            
+            <br><br>
+            <a href="<%=response.encodeURL("addUsuario.jsp")%>">Dar de alta un nuevo usuario</a>
+
+     <!--   menu dropdown html
+     https://codigonaranja.com/curso-html-mostrar-listas-desplegables
+        -->
+        
+   
+
+        
+>>>>>>> pruebas
     </body>
 </html>

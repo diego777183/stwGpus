@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package demo.servlet;
+package servlet;
 
-import demo.bd.PedidoDAO;
-import demo.bd.Producto;
-import demo.bd.ProductoDAO;
+import bd.Usuario;
+import bd.UsuarioFacade;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -21,11 +20,10 @@ import javax.servlet.http.HttpSession;
  *
  * @author fsern
  */
-@WebServlet(name = "EliminarProducto", urlPatterns = {"/eliminarProducto"})
-public class EliminarProducto extends HttpServlet {
+@WebServlet(name = "ModificarUsuario", urlPatterns = {"/modificarUsuario"})
+public class ModificarUsuario extends HttpServlet {
 
-    @EJB ProductoDAO productoDB;
-    @EJB PedidoDAO pedidoDB;
+    @EJB UsuarioFacade usuarioDAO;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,25 +36,39 @@ public class EliminarProducto extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        HttpSession session = request.getSession(true);
         
-        Long id = Long.valueOf(request.getParameter("id"));
+        request.setCharacterEncoding("UTF-8"); // <<=== NECESARIO para que funcionen las tildes, Ñs, etc... 
+        HttpSession session = request.getSession();
         
-        Producto p  = productoDB.find(id);
-        if (p !=null){
-            try{
-                if ( ! pedidoDB.existePedidoDeProducto(p)){
-                    productoDB.remove(p);
-                }else{
-                    session.setAttribute("msg", "ERROR: No puede eliminarse este producto porque figura en un pedido.");
-                }
-            }catch(javax.persistence.PersistenceException e){
-                session.setAttribute("msg", "ERROR: No puede eliminarse este producto.");
+        Long id         = (Long)(session.getAttribute("idUsuario"));
+        
+        if (id!=null){
+            String login    = request.getParameter("login");
+            String pwd      = request.getParameter("pwd");
+            String nombre   = request.getParameter("nombre");
+            String ap1      = request.getParameter("ap1");
+            
+            Usuario u = usuarioDAO.find(id);
+            if (u!=null){
+                System.out.println("==a==> "+u.toJson());
+                u.setId(id);
+                u.setLogin(login);
+                u.setPassword(pwd);
+                u.setNombre(nombre);
+                u.setAp1(ap1);
+                usuarioDAO.edit(u);
+
+                System.out.println("==b==> "+u.toJson());
             }
-        }
+
+
+            request.getSession().setAttribute("msg", "El usuario '"+u.getLogin()+"' ha sido modificado.");
+            response.sendRedirect(response.encodeURL("verMensajesRecibidos.jsp"));
         
-        response.sendRedirect(response.encodeRedirectURL("menuProductos.jsp"));
+        }else{
+            session.setAttribute("msg", "ERROR: La sesión ha caducado.");
+            response.sendRedirect(response.encodeURL("index.jsp"));
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
