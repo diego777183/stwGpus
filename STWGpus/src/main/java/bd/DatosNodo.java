@@ -28,7 +28,7 @@ import javax.persistence.ManyToOne;
  * @author fserna
  */
 @Entity
-public class PrecioEthereum implements Serializable {
+public class DatosNodo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,31 +36,61 @@ public class PrecioEthereum implements Serializable {
     private Long id;
     
     private Date fecha;
-    
 
-    private Double precio;
+    private String name;
+    private String efficiency;
+    private String hashrate;
+    private String powerGPU;
+    private String temperature;
+    private String solved_count;
+    private String rejected_count;
+    private String thermometer;
+    private String power;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public void setFecha() {
         fecha = new Date(System.currentTimeMillis());
     }
 
-    public void setPrecio(Double precio) {
-        this.precio = precio;
+    public void setName(String name) {
+        this.name = name;
     }
 
-
-
-    
-   
-    
- 
- 
-    
-    
-    public Double getPrecio() {
-        return precio;
+    public void setEfficiency(String efficiency) {
+        this.efficiency = efficiency;
     }
+
+    public void setHashrate(String hashrate) {
+        this.hashrate = hashrate;
+    }
+
+    public void setPowerGPU(String powerGPU) {
+        this.powerGPU = powerGPU;
+    }
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
+    }
+
+    public void setSolved_count(String solved_count) {
+        this.solved_count = solved_count;
+    }
+
+    public void setRejected_count(String rejected_count) {
+        this.rejected_count = rejected_count;
+    }
+
+    public void setThermometer(String thermometer) {
+        this.thermometer = thermometer;
+    }
+
+    public void setPower(String power) {
+        this.power = power;
+    }
+    
 
     
 
