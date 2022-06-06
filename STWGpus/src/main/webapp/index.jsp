@@ -39,17 +39,12 @@
         <br>
         <a href="<%=response.encodeRedirectURL("menuProductos.jsp")%>">Productos</a> | 
         <a href="<%=response.encodeRedirectURL("menuClientes.jsp")%>">Clientes</a> | 
-        <a href="<%=response.encodeRedirectURL("listadoPedidos.jsp")%>">Listado de Pedidos</a> |
-        <a href="<%=response.encodeRedirectURL("listadoPrecioLuz.jsp")%>">Listado de Precios de la Luz</a> |
-        <a href="<%=response.encodeRedirectURL("listadoPrecioEthereum.jsp")%>">Listado de Precios de Ethereum</a>
+        <a href="<%=response.encodeRedirectURL("listadoPedidos.jsp")%>">Listado de Pedidos</a>
 
-<select name="color" id="color">
-  <option value="r">Rojo</option>
-  <option value="a">Azul</option>
-  <option value="v">Verde</option>
-</select>
-     <!--   menu dropdown html
-     https://codigonaranja.com/curso-html-mostrar-listas-desplegables
-        -->
+        <select name="color" id="color" onchange="location = this.value;">
+          <option value="">Seleccione historico de Precios</option>    
+          <option value="<%=response.encodeRedirectURL("listadoPrecioLuz.jsp")%>">Listado de Precios de la Luz</option>
+          <option value="<%=response.encodeRedirectURL("listadoPrecioEthereum.jsp")%>">Listado de Precios de Ethereum</option>
+        </select>
     </body>
 </html>

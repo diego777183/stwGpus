@@ -10,11 +10,18 @@ import demo.bd.ClienteDAO;
 import demo.bd.PrecioEthereum;
 import demo.bd.PrecioEthereumDAO;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
+import javax.ejb.NoMoreTimeoutsException;
+import javax.ejb.NoSuchObjectLocalException;
+import javax.ejb.ScheduleExpression;
 import javax.ejb.Timer;
+import javax.ejb.TimerHandle;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,9 +51,49 @@ public class AddPrecioEthereum extends HttpServlet {
         
         request.setCharacterEncoding("UTF-8"); // <<=== NECESARIO para que funcionen las tildes, Ñs, etc... 
 
-  //      Timer timer = new Timer();
-    //    TimerTask timerTask = new TimerTask() {
-    //        public void run(){
+        Timer timer = new Timer() {
+            @Override
+            public void cancel() throws IllegalStateException, NoSuchObjectLocalException, EJBException {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public long getTimeRemaining() throws IllegalStateException, NoSuchObjectLocalException, NoMoreTimeoutsException, EJBException {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public Date getNextTimeout() throws IllegalStateException, NoSuchObjectLocalException, NoMoreTimeoutsException, EJBException {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public ScheduleExpression getSchedule() throws IllegalStateException, NoSuchObjectLocalException, EJBException {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public boolean isPersistent() throws IllegalStateException, NoSuchObjectLocalException, EJBException {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public boolean isCalendarTimer() throws IllegalStateException, NoSuchObjectLocalException, EJBException {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public Serializable getInfo() throws IllegalStateException, NoSuchObjectLocalException, EJBException {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            @Override
+            public TimerHandle getHandle() throws IllegalStateException, NoSuchObjectLocalException, EJBException {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        };
+        TimerTask timerTask = new TimerTask() {
+            public void run(){
                 PrecioEthereum p = new PrecioEthereum();
 
                 try{
@@ -57,11 +104,10 @@ public class AddPrecioEthereum extends HttpServlet {
                     e.printStackTrace();
                 }
                 precioEthDB.create(p);
-      //      }
-        //};        
+            }
+        };        
         
-     //   timer.schedule(timerTask, 10, 1000);//segundo parametro, cada cuando empieza, segundo parametro, cada cuanto lo repite
-               
+       // timer.schedule(timerTask, 10, 1000);//segundo parametro, cada cuando empieza, segundo parametro, cada cuanto lo repite
        // no vamos a ninguna pagina, por lo que la siguiente linea no hace falta
        //response.sendRedirect(response.encodeRedirectURL("menuClientes.jsp"));
     }

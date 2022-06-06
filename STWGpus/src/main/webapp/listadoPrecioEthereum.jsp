@@ -1,7 +1,6 @@
 <%-- 
     Document   : index
-    Created on : 20-03-2020, 11:29:48
-    Author     : fserna
+    Created on : 15-05-2022
 
 --%>
 
@@ -42,40 +41,26 @@
     </head>
     <body>
         <%@include file="WEB-INF/jspf/cabecera.jspf" %>
-        >>> <a href="<%=response.encodeURL("index.jsp")%>">Inicio</a> >>> <b>Listado de Precios de la Luz</b>
+        >>> <a href="<%=response.encodeURL("index.jsp")%>">Inicio</a> >>> <b>Listado de Precios de Ethereum</b>
         <hr>
         <br>
         <b>Histórico de precios de Ethereum</b>
+        <br>
         <table border="1">
             <tr style="background-color:blue; color:white">
-                <td>Id</td>
                 <td>Fecha</td>
-                <td>Cliente</td>
-                <td>Núm.Unidades</td>
-                <td>Producto</td>
-                <td>PVP Unidad</td>
-                <td>PVP Total</td>
+                <td>Precio</td>
             </tr>
             <%  Double total = 0.0;
                 for (PrecioEthereum p: preciosEthereumDAO.findAll()) { 
                     total += p.getPrecio();
             %>
             <tr>
-                <td><%=p.getId()%></td>
                 <td><%=Time.getDDMMYYYY(p.getFecha())%>@<%=Time.getHHMMSS(p.getFecha())%></td>
-                <td><%=p.getCliente().getNombre()%> <%=p.getCliente().getAp1()%></td>
-                <td align="right"><%=p.getNumUnidades()%></td>
-                <td><%=p.getProducto().getNombre()%></td>
-                <td align="right"><%=p.getProducto().getPrecioUnitario()%> €</td>
                 <td align="right"><%=Util.getNumberFormatted(p.getPrecio(), "#,###,##0.00")%> €</td>
             </tr>
             <% } %>
             <tr style="background-color:blue; color:white">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
                 <td></td>
                 <td align="right"><b><%=Util.getNumberFormatted(total, "#,###,##0.00")%> €</b></td>
             </tr>
