@@ -5,7 +5,14 @@
  */
 package demo.bd;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import javax.json.JsonObject;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +41,34 @@ public class PrecioEthereum implements Serializable {
     @ManyToOne
     private Cliente cliente;
 
+    public final static String URL = "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd";
+    
+public double obtenerPrecioAPI() throws IOException, InterruptedException{
+    HttpClient httpClient = HttpClient.newBuilder().
+                    version(HttpClient.Version.HTTP_2).build();
+    
+    HttpRequest request = HttpRequest.newBuilder().
+                    GET().uri(URI.create(URL)).build();
+    
+    HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+/*
+    JsonObject json = new JsonObject(response.body());
+    JsonObject json2 = (JsonObject) json.get("ethereum");
+
+    BigDecimal precioObtenido = (BigDecimal) json2.get("usd");
+    System.out.println("Precio Ethereum: " + precioObtenido);
+    double preciop = precioObtenido.doubleValue();
+*/
+    double preciop = 2.53;
+    return preciop;
+}    
+    
+    public Double getPrecio() throws IOException, InterruptedException {
+    return obtenerPrecioAPI();
+}
+ 
+    
+    
     public Long getId() {
         return id;
     }
@@ -70,10 +105,6 @@ public class PrecioEthereum implements Serializable {
 
     public void setNumUnidades(Integer numUnidades) {
         this.numUnidades = numUnidades;
-    }
-
-    public Double getPrecio() {
-        return precio;
     }
 
     public void setPrecio(Double precio) {
