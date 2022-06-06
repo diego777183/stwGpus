@@ -6,7 +6,7 @@
     <class>demo.bd.Cliente</class>
     <class>demo.bd.Pedido</class>
     <class>demo.bd.Producto</class>
-    <class>demo.bd.PrecioLuz</class>
+    <class>bd.PrecioLuz</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:h2:D:\Archivos_GitHub\stwGpus\STWGpus\stwBD"/>

@@ -5,11 +5,11 @@
 --%>
 
 
-<%@page import="demo.bd.UsuarioFacade"%>
-<%@page import="demo.util.Time"%>
+<%@page import="bd.UsuarioFacade"%>
+<%@page import="util.Time"%>
 <%@page import="java.util.List"%>
 <%@page import="javax.naming.InitialContext"%>
-<%@page import="demo.bd.Usuario"%>
+<%@page import="bd.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 

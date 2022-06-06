@@ -37,8 +37,12 @@
         
         <br>
 
-        <a href="<%=response.encodeRedirectURL("listadoPrecioLuz.jsp")%>">Listado de Precios de la Luz</a> |
-        <a href="<%=response.encodeRedirectURL("listadoPrecioEthereum.jsp")%>">Listado de Precios de Ethereum</a>
+        
+        <select name="color" id="color" onchange="location = this.value;">
+          <option value="">Seleccione historico de Precios</option>    
+          <option value="<%=response.encodeRedirectURL("listadoPrecioLuz.jsp")%>">Listado de Precios de la Luz</option>
+          <option value="<%=response.encodeRedirectURL("listadoPrecioEthereum.jsp")%>">Listado de Precios de Ethereum</option>
+        </select>
         <br><br><br><br>
         <form method="POST" action="<%=response.encodeURL("login")%>">
             <table>

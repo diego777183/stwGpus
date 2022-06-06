@@ -1,11 +1,12 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-package demo.servlet;
+package servlet;
 
-import demo.bd.Usuario;
-import demo.bd.UsuarioFacade;
+import bd.Usuario;
+import bd.UsuarioFacade;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -17,13 +18,12 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author usuario
+ * @author fsern
  */
-@WebServlet(name = "Login", urlPatterns = {"/login"})
-public class Login extends HttpServlet {
+@WebServlet(name = "ModificarUsuario", urlPatterns = {"/modificarUsuario"})
+public class ModificarUsuario extends HttpServlet {
 
-    @EJB UsuarioFacade clienteDAO;
-    
+    @EJB UsuarioFacade usuarioDAO;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,25 +37,38 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        request.setCharacterEncoding("UTF-8"); // <<=== NECESARIO para que funcionen las tildes, Ñs, etc... 
         HttpSession session = request.getSession();
         
-        String login    = request.getParameter("login");
-        String pwd      = request.getParameter("pwd");
+        Long id         = (Long)(session.getAttribute("idUsuario"));
         
+        if (id!=null){
+            String login    = request.getParameter("login");
+            String pwd      = request.getParameter("pwd");
+            String nombre   = request.getParameter("nombre");
+            String ap1      = request.getParameter("ap1");
             
-        Usuario usuario = clienteDAO.checkAutenticacion(login, pwd);
-        if (usuario!=null){
-            session.setAttribute("idUsuario", usuario.getId());
-            session.setAttribute("msg", null);
-            response.sendRedirect(response.encodeURL("menuPpal.jsp"));
+            Usuario u = usuarioDAO.find(id);
+            if (u!=null){
+                System.out.println("==a==> "+u.toJson());
+                u.setId(id);
+                u.setLogin(login);
+                u.setPassword(pwd);
+                u.setNombre(nombre);
+                u.setAp1(ap1);
+                usuarioDAO.edit(u);
+
+                System.out.println("==b==> "+u.toJson());
+            }
+
+
+            request.getSession().setAttribute("msg", "El usuario '"+u.getLogin()+"' ha sido modificado.");
+            response.sendRedirect(response.encodeURL("verMensajesRecibidos.jsp"));
+        
         }else{
-            session.setAttribute("idUsuario", null);
-            session.setAttribute("msg", "ERROR en la autenticación.");
+            session.setAttribute("msg", "ERROR: La sesión ha caducado.");
             response.sendRedirect(response.encodeURL("index.jsp"));
         }
-        
-        
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

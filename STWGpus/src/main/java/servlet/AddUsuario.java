@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package demo.servlet;
+package servlet;
 
-import demo.bd.Usuario;
-import demo.bd.UsuarioFacade;
+import bd.Usuario;
+import bd.UsuarioFacade;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;

@@ -5,8 +5,8 @@
 --%>
 
 
-<%@page import="demo.bd.Usuario"%>
-<%@page import="demo.util.Util"%>
+<%@page import="bd.Usuario"%>
+<%@page import="util.Util"%>
 <%@page import="javax.naming.InitialContext"%>
 <%@page import="javax.naming.Context"%>
 <%@page import="javax.naming.Context"%>

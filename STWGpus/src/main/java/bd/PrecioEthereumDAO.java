@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package demo.bd;
+package bd;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -16,7 +16,7 @@ import javax.persistence.Query;
  */
 @Stateless
 
-public class PrecioLuzDAO extends AbstractFacade<PrecioLuz> {
+public class PrecioEthereumDAO extends AbstractFacade<PrecioEthereum> {
 
     @PersistenceContext(unitName = "stwGpusResource")
     private EntityManager em;
@@ -26,9 +26,10 @@ public class PrecioLuzDAO extends AbstractFacade<PrecioLuz> {
         return em;
     }
 
-    public PrecioLuzDAO() {
-        super(PrecioLuz.class);
+    public PrecioEthereumDAO() {
+        super(PrecioEthereum.class);
     }
+    
 
     
 }

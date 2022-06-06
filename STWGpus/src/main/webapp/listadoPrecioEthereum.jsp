@@ -6,12 +6,12 @@
 --%>
 
 
-<%@page import="demo.bd.PrecioEthereum"%>
-<%@page import="demo.bd.PrecioEthereumDAO"%>
-<%@page import="demo.bd.PrecioLuz"%>
-<%@page import="demo.bd.PrecioLuzDAO"%>
-<%@page import="demo.util.Util"%>
-<%@page import="demo.util.Time"%>
+<%@page import="bd.PrecioEthereum"%>
+<%@page import="bd.PrecioEthereumDAO"%>
+<%@page import="bd.PrecioLuz"%>
+<%@page import="bd.PrecioLuzDAO"%>
+<%@page import="util.Util"%>
+<%@page import="util.Time"%>
 <%@page import="javax.naming.InitialContext"%>
 <%@page import="javax.naming.Context"%>
 <%@page import="javax.naming.Context"%>

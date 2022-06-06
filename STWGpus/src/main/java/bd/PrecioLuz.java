@@ -3,9 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package demo.bd;
+package bd;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.io.StringReader;
+import java.math.BigDecimal;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,7 +43,35 @@ public class PrecioLuz implements Serializable {
 
 
 
+
+    public final static String URL = "https://api.preciodelaluz.org/v1/prices/now?zone=PCB";
     
+public double obtenerPrecioAPI() throws IOException, InterruptedException{
+    double precioLuz;
+
+    HttpClient httpClient = HttpClient.newBuilder().
+                    version(HttpClient.Version.HTTP_2).build();
+    
+    HttpRequest request = HttpRequest.newBuilder().
+                    GET().uri(URI.create(URL)).build();
+    
+    HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+    JsonReader jsonReader = Json.createReader(new StringReader(response.body()));
+    JsonObject json = jsonReader.readObject();
+    
+    BigDecimal precioObtenido = (BigDecimal) json.get("price");
+    
+    System.out.println("Precio Luz: " + precioObtenido);
+    
+    precioLuz = precioObtenido.doubleValue();
+
+    return precioLuz;
+}    
+    
+    public Double getPrecio() throws IOException, InterruptedException {
+    return obtenerPrecioAPI();
+}    
     
 
     public Long getId() {
@@ -43,8 +81,6 @@ public class PrecioLuz implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
-
 
     public Long getFecha() {
         return fecha;
@@ -64,9 +100,6 @@ public class PrecioLuz implements Serializable {
         this.numUnidades = numUnidades;
     }
 
-    public Double getPrecio() {
-        return precio;
-    }
 
     public void setPrecio(Double precio) {
         this.precio = precio;
@@ -80,10 +113,11 @@ public class PrecioLuz implements Serializable {
         return hash;
     }
 
+ 
 
     @Override
     public String toString() {
-        return "demo.bd.PrecioLuz[ id=" + id + " ]";
+        return "demo.bd.Pedido[ id=" + id + " ]";
     }
     
 }
