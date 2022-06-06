@@ -100,7 +100,7 @@ public class AddPrecioEthereum extends HttpServlet {
                 p.setFecha(System.currentTimeMillis());                    
                 p.setPrecio(p.getPrecio());
                 
-                precioEthDB.create(p);                
+                precioEthDB.create(p);               
                 }catch(Exception e){
                     e.printStackTrace();
                 }
