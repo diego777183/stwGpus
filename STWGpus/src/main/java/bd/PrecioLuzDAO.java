@@ -6,6 +6,10 @@
 package bd;
 
 import bd.AbstractFacade;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,7 +34,20 @@ public class PrecioLuzDAO extends AbstractFacade<PrecioLuz> {
     public PrecioLuzDAO() {
         super(PrecioLuz.class);
     }
-    
 
-    
+    public List<PrecioLuz> obtenerPreciosLuz() {
+
+        Date date = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int i = c.get(Calendar.DAY_OF_WEEK) - c.getFirstDayOfWeek();
+        c.add(Calendar.DATE, -i - 7);
+        Date start = c.getTime();
+        System.out.println("HOLA");
+        Query query = em.createQuery("SELECT e FROM PrecioLuz e"); 
+        System.out.println("adios");
+
+        return query.getResultList();
+    }
+
 }

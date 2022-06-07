@@ -27,44 +27,38 @@
 <!DOCTYPE html>
 <style>
     body {font-family: "Lato", sans-serif; font-size: 12px;}
+    
 </style>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JPA oneToMany</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    </head>
-    <body>
-        <%@include file="WEB-INF/jspf/cabecera.jspf" %>
-        >>> <a href="<%=response.encodeURL("index.jsp")%>">Inicio</a> >>> <b>Listado de Precios de la Luz</b>
-        <hr>
-        <br>
-        <b>Histórico de precios de Ethereum</b>
-        <table border="1">
-            <tr style="background-color:blue; color:white">
-                <td>Id</td>
-                <td>Fecha</td>
-                <td>Cliente</td>
-                <td>Núm.Unidades</td>
-                <td>Producto</td>
-                <td>PVP Unidad</td>
-                <td>PVP Total</td>
-            </tr>
-            <%  Double total = 0.0;
-                for (PrecioEthereum p: preciosEthereumDAO.findAll()) { 
-                    total += p.getPrecio();
-            %>
-        
-            <% } %>
-            <tr style="background-color:blue; color:white">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td align="right"><b><%=Util.getNumberFormatted(total, "#,###,##0.00")%> €</b></td>
-            </tr>
-        </table>
-    </body>
+  <html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales'],
+          ['2004',  1000],
+          ['2005',  1170],
+          ['2006',  660],
+          ['2007',  1030]
+        ]);
+
+        var options = {
+          title: 'Company Performance',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+      <%@include file="WEB-INF/jspf/cabecera.jspf" %>
+    <div id="curve_chart" style="width: 900px; height: 500px"></div>
+  </body>
 </html>

@@ -12,65 +12,82 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<% 
+<%
 
 %>
 <!DOCTYPE html>
-<style>
-    body {font-family: "Lato", sans-serif; font-size: 12px;}
-</style>
 <html>
     <head>
+        <style>
+            body {
+                font-family: "Lato", sans-serif;
+                font-size: 12px;
+            }
+        </style>
+
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JPA oneToMany</title>
+        <script type="text/javascript" src="websocket.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <title>STWGpus</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<!--
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"> 
--->
     </head>
     <body>
         <%@include file="WEB-INF/jspf/cabecera.jspf" %>
-        
-        <h3>Ejemplo de OneToMany con JPA</h3>
-        
-        <br>
+        <div style="margin-left: 25px;">
+            <h3>Seleccione que quiere visualizar</h3>
 
-        
-        <select name="color" id="color" onchange="location = this.value;">
-          <option value="">Seleccione historico de Precios</option>    
-          <option value="<%=response.encodeRedirectURL("listadoPrecioLuz.jsp")%>">Listado de Precios de la Luz</option>
-          <option value="<%=response.encodeRedirectURL("listadoPrecioEthereum.jsp")%>">Listado de Precios de Ethereum</option>
-        </select>
+            <br>
+            <script type="text/javascript" src="websocket.js"></script>
+
+            <select name="color" id="tipoGrafica" onchange="prueba();">
+                <option> </option>    
+                <option value="light">Gráfico de Precios de la Luz</option>
+                <option value="eth">Gráfico de Precios de Ethereum</option>
+            </select>
+        </div>
         <br><br><br><br>
-        <form method="POST" action="<%=response.encodeURL("login")%>">
-            <table>
-                <tr>
-                    <td>Login:</td>
-                    <td><input name="login"></td>
-                </tr>
-                <tr>
-                    <td>Contraseña:</td>
-                    <td><input type="password" name="pwd"></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Login"></td>
-                </tr>
-            </table>
-        
-        </form>
-            
-            <br><br>
-            <a href="<%=response.encodeURL("addUsuario.jsp")%>">Dar de alta un nuevo usuario</a>
+        <div style="margin-left: 1600px;margin-top: -150px">
+            <form method="POST" action="<%=response.encodeURL("login")%>">
+                <table>
 
-     <!--   menu dropdown html
-     https://codigonaranja.com/curso-html-mostrar-listas-desplegables
-        -->
-        
-   
+                    <tr>
+                        <td>Login:</td>
+                        <td><input name="login"></td>
+                    </tr>
+                    <tr>
+                        <td>Contraseña:</td>
+                        <td><input type="password" name="pwd"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="Login"></td>
+                    </tr>
 
-        
+                </table>
+
+            </form>
+            <a href="<%=response.encodeURL("addUsuario.jsp")%>">Nuevo usuario</a>
+
+            <br>
+
+        </div>
+
+        <div id="graficaLuz"></div>  
+     
+        <script type="text/javascript">
+            google.charts.load('current', {'packages': ['corechart'], language: 'es'});
+
+            /*google.charts.setOnLoadCallback(
+             function() { // Anonymous function that calls drawChart1 and drawChart2
+             initCo2GraphLive();
+             initCo2GraphLog();
+             });*/
+            google.charts.setOnLoadCallback(initGrafica);
+            //google.charts.setOnLoadCallback(initCo2GraphLog);
+
+        </script>
+
+
     </body>
 </html>

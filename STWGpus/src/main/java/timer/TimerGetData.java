@@ -45,14 +45,13 @@ public class TimerGetData {
     public final static String URL_ETHEREUM = "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd";
     public final static String URL_ENERGY = "https://api.preciodelaluz.org/v1/prices/now?zone=PCB";
 
-    @Schedule(hour = "*", minute = "*/1", persistent = false)
+    @Schedule(hour = "*/5", persistent = false)
 
     public void myTimer() throws IOException, InterruptedException {
 
         addEthereumPrice();
         addNodeData();
         addLightPrice();
-
     }
 
     public void addNodeData() throws IOException, InterruptedException {
@@ -69,9 +68,12 @@ public class TimerGetData {
         DatosNodo datosNodo = new DatosNodo();
         System.out.println("AAAAAAAAAAAAAAAAAAAA");
         System.out.println(json.get("gpus").toString());
+        datosNodo.setFecha();
         
-        if( Integer.parseInt(json.get("gpus").toString()) == 0){
-            System.out.println("A FERNI LE GUSTA DIEGO");
+        JsonObject jsonNode = (JsonObject) json.get("gpus");
+
+        if( Integer.parseInt(jsonNode.get("isOnline").toString()) == 0){
+            System.out.println("A FERNI LE GUSTA DIEGO, PERO MUCHO MUCHO");
             datosNodo.setName("");
             datosNodo.setEfficiency("");
             datosNodo.setHashrate("");
@@ -82,8 +84,6 @@ public class TimerGetData {
             datosNodo.setPower(json.get("power").toString());
             datosNodo.setThermometer(json.get("thermometer").toString());
         }else{
-            JsonObject jsonNode = (JsonObject) json.get("gpus");
-            
             datosNodo.setName(jsonNode.get("name").toString());
             datosNodo.setEfficiency(jsonNode.get("efficiency").toString());
             datosNodo.setHashrate(jsonNode.get("hashrate").toString());
@@ -91,7 +91,6 @@ public class TimerGetData {
             datosNodo.setTemperature(jsonNode.get("temperature").toString());
             datosNodo.setSolved_count(jsonNode.get("solved_count").toString());
             datosNodo.setRejected_count(jsonNode.get("rejected_count").toString());            
-            
             datosNodo.setPower(json.get("power").toString());
             datosNodo.setThermometer(json.get("thermometer").toString());
         }

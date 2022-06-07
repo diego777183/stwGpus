@@ -72,12 +72,14 @@ public class PrecioLuz implements Serializable {
         return hash;
     }
 
- 
-
     @Override
     public String toString() {
-        return "demo.bd.Pedido[ id=" + id + " ]";
+        return "PrecioLuz{" + "id=" + id + ", fecha=" + fecha + ", precio=" + precio + '}';
     }
+
+ 
+
+    
 
     
 }
