@@ -5,6 +5,9 @@
  */
 package bd;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,7 +32,16 @@ public class PrecioEthereumDAO extends AbstractFacade<PrecioEthereum> {
     public PrecioEthereumDAO() {
         super(PrecioEthereum.class);
     }
-    
 
-    
+    public List<PrecioEthereum> obtenerPreciosEth() {
+        Date date = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        int i = c.get(Calendar.DAY_OF_WEEK) - c.getFirstDayOfWeek();
+        c.add(Calendar.DATE, -i - 7);
+        Date start = c.getTime();
+        Query query = em.createQuery("SELECT e FROM PrecioEthereum e"); 
+
+        return query.getResultList();
+    }
 }

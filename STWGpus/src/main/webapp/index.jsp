@@ -41,8 +41,8 @@
             <script type="text/javascript" src="websocket.js"></script>
 
             <select name="color" id="tipoGrafica" onchange="prueba();">
-                <option> </option>    
-                <option value="light">Gráfico de Precios de la Luz</option>
+                <option value="nada"> </option>    
+                <option value="luz">Gráfico de Precios de la Luz</option>
                 <option value="eth">Gráfico de Precios de Ethereum</option>
             </select>
         </div>
