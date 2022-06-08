@@ -33,7 +33,7 @@ public class DatosNodoDAO extends AbstractFacade<DatosNodo> {
         super(DatosNodo.class);
     }
 
-    public List<String> obtenerDatosNodo(String tipo) {
+    public List<DatosNodo> obtenerDatosNodo() {
         Date date = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(date);
@@ -41,25 +41,10 @@ public class DatosNodoDAO extends AbstractFacade<DatosNodo> {
         c.add(Calendar.DATE, -i - 7);
         Date start = c.getTime();
         Query query = null;
-        
-        switch (tipo) {
-            case "\"temp\"":
-                query = em.createQuery("SELECT e.temperature FROM DatosNodo e"); 
-                break;
-            case "\"efi\"":
-                query = em.createQuery("SELECT e.efficiency FROM DatosNodo e"); 
-                break;
-            case "\"watt\"":
-                query = em.createQuery("SELECT e.power FROM DatosNodo e"); 
-                break;
-            case "\"hash\"":
-                query = em.createQuery("SELECT e.hashrate FROM DatosNodo e"); 
-                break;                  
-        }
-        
+
+        query = em.createQuery("SELECT e FROM DatosNodo e");
+
         return query.getResultList();
     }
-    
 
-    
 }

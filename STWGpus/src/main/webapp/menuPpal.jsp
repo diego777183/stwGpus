@@ -68,7 +68,7 @@
             <br>
             <script type="text/javascript" src="websocket.js"></script>
 
-            <select name="color" id="tipoGrafica" onchange="prueba();">
+            <select name="color" id="tipoGraficaUsu" onchange="pruebaUsu();">
                 <option value="nada"> </option>    
                 <option value="temp">Gráfico de temperatura de la gráfica</option>
                 <option value="efi">Gráfico de la eficiencia H/w</option>

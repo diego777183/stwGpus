@@ -37,21 +37,31 @@ function openSocket() {
         console.log("==== " + msg);
         var json = JSON.parse(event.data);
         console.log("EEEEEEEE")
-        console.log(json)
         console.log(json.cmnd)
         switch (json.cmnd) {
             case "datePrecioLuzResult":
-            break;
+                console.log("SSSSSS")
+
+                drawPrices(json.values);
+                break;
             case "datePrecioEthResult":
-            break;
+                console.log("SSSSSS")
+
+                drawPrices(json.values);
+
+                break;
             case "listaDatosTemp":
                 console.log("SSSSSS")
                 drawPrices(json.values);
                 break;
             case "listaDatosEfi":
-            break;
+                drawPrices(json.values);
+                break;
             case "listaDatosPower":
-            break;
+                console.log("SSSSSS")
+
+                drawPrices(json.values);
+                break;
             case "listaDatosHash":
                 drawPrices(json.values);
                 break;
@@ -147,7 +157,6 @@ function drawPrices(value) {
     if (datosGrafica !== undefined) {
         if (value) {
             for (var i = 0; i < value.length; i += 1) {
-                console.log("heee " + value[i].id + " y la hora es " + value[i].hora);
                 datosGrafica.addRow([value[i].fecha, value[i].precio]);
             }
 
@@ -180,7 +189,11 @@ function prueba() {
     var graficaSeleccionada = document.getElementById("tipoGrafica").value;
     initGrafica(graficaSeleccionada)
     webSocket.send("{\"comando\": \"tipoGrafica\", \"values\": \"" + graficaSeleccionada + "\" }");
-
 }
 
+function pruebaUsu() {
+    var graficaSeleccionada = document.getElementById("tipoGraficaUsu").value;
+    initGrafica(graficaSeleccionada)
+    webSocket.send("{\"comando\": \"tipoGrafica\", \"values\": \"" + graficaSeleccionada + "\" }");
+}
 

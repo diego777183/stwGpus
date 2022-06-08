@@ -101,9 +101,59 @@ public class DatosNodo implements Serializable {
         return hash;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEfficiency() {
+        return efficiency;
+    }
+
+    public String getHashrate() {
+        return hashrate;
+    }
+
+    public String getPowerGPU() {
+        return powerGPU;
+    }
+
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public String getSolved_count() {
+        return solved_count;
+    }
+
+    public String getRejected_count() {
+        return rejected_count;
+    }
+
+    public String getThermometer() {
+        return thermometer;
+    }
+
+    public String getPower() {
+        return power;
+    }
+
     @Override
     public String toString() {
-        return "demo.bd.Pedido[ id=" + id + " ]";
+        return "DatosNodo{" + "id=" + id + ", fecha=" + fecha + ", name=" + name + ", efficiency=" + efficiency + ", hashrate=" + hashrate + ", powerGPU=" + powerGPU + ", temperature=" + temperature + ", solved_count=" + solved_count + ", rejected_count=" + rejected_count + ", thermometer=" + thermometer + ", power=" + power + '}';
     }
+
+  
     
 }

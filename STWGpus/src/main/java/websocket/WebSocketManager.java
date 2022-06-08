@@ -2,10 +2,14 @@ package websocket;
 
 import bd.DatosNodo;
 import bd.DatosNodoDAO;
+import bd.EficienciaDTO;
+import bd.HashrateDTO;
+import bd.PowerDTO;
 import bd.PrecioEthereum;
 import bd.PrecioEthereumDAO;
 import bd.PrecioLuz;
 import bd.PrecioLuzDAO;
+import bd.TemperaturaDTO;
 import java.io.IOException;
 import java.util.List;
 import com.google.gson.Gson;
@@ -65,78 +69,58 @@ public class WebSocketManager {
         switch (tipo) {
             case "\"luz\"":
                 List<PrecioLuz> listaPreciosLuz = precioLuzDB.obtenerPreciosLuz();
-                sendMessageSession(gson.toJson(listaPreciosLuz, List.class), "datePrecioLuzResult", sesion);
+                sendMessageSession(gson.toJson(listaPreciosLuz, List.class), "datePrecioLuzResult", sesion, tipo);
                 break;
             case "\"eth\"":
                 List<PrecioEthereum> listaPreciosEth = precioEthDB.obtenerPreciosEth();
-                sendMessageSession(gson.toJson(listaPreciosEth, List.class), "datePrecioEthResult", sesion);
+                sendMessageSession(gson.toJson(listaPreciosEth, List.class), "datePrecioEthResult", sesion, tipo);
                 break;
             case "\"temp\"":
-                List<Integer> listaDatosTemp = parseNodeData(tipo,datosNodoDB.obtenerDatosNodo(tipo));
-                sendMessageSession(gson.toJson(listaDatosTemp, List.class), "listaDatosTemp", sesion);
+                List<DatosNodo> listaDatosTemp =datosNodoDB.obtenerDatosNodo();
+                List<TemperaturaDTO> listaTempDTO = new ArrayList();
+                for (DatosNodo datosNodo : listaDatosTemp) {
+                    listaTempDTO.add(new TemperaturaDTO(datosNodo.getFecha(), datosNodo.getTemperature()));
+                }
+                sendMessageSession(gson.toJson(listaTempDTO, List.class), "listaDatosTemp", sesion, tipo);
                 break;             
             case "\"efi\"":
-                List<Integer> listaDatosEfi = parseNodeData(tipo,datosNodoDB.obtenerDatosNodo(tipo));
-                sendMessageSession(gson.toJson(listaDatosEfi, List.class), "listaDatosEfi", sesion);
+                List<DatosNodo> listaDatosEfi = datosNodoDB.obtenerDatosNodo();
+                List<EficienciaDTO> listaEfiDTO = new ArrayList();
+                for (DatosNodo datosNodo : listaDatosEfi) {
+                    listaEfiDTO.add(new EficienciaDTO(datosNodo.getFecha(), datosNodo.getEfficiency()));
+                }
+                sendMessageSession(gson.toJson(listaEfiDTO, List.class), "listaDatosEfi", sesion, tipo);
                 break;             
             case "\"watt\"":
-                List<Integer> listaDatosPower = parseNodeData(tipo,datosNodoDB.obtenerDatosNodo(tipo));
-                sendMessageSession(gson.toJson(listaDatosPower, List.class), "listaDatosPower", sesion);
+                List<DatosNodo> listaDatosPower = datosNodoDB.obtenerDatosNodo();
+                List<PowerDTO> listaPowerDTO = new ArrayList();
+                for (DatosNodo datosNodo : listaDatosPower) {
+                    listaPowerDTO.add(new PowerDTO(datosNodo.getFecha(), datosNodo.getPower()));
+                }
+                sendMessageSession(gson.toJson(listaPowerDTO, List.class), "listaDatosPower", sesion, tipo);
                 break;             
             case "\"hash\"":
-                List<Double> listaDatosHash = parseNodeData(tipo,datosNodoDB.obtenerDatosNodo(tipo));
-                sendMessageSession(gson.toJson(listaDatosHash, List.class), "listaDatosHash", sesion);
+                List<DatosNodo> listaDatosHash = datosNodoDB.obtenerDatosNodo();
+                List<HashrateDTO> listaHashDTO = new ArrayList();
+                for (DatosNodo datosNodo : listaDatosHash) {
+                    listaHashDTO.add(new HashrateDTO(datosNodo.getFecha(), datosNodo.getHashrate()));
+                }
+                sendMessageSession(gson.toJson(listaHashDTO, List.class), "listaDatosHash", sesion, tipo);
                 break;                  
         }
         return message;
     }
     
-    private List parseNodeData(String tipo, List<String> lista){
-        switch (tipo) {
-            case "\"temp\"":       
-            case "\"watt\"":
-                List<Integer> datosTempPow = new ArrayList<Integer>();
-                for (String e : lista) {
-                    if(e.equals("")){
-                        datosTempPow.add(0);                        
-                    }else{
-                        datosTempPow.add(Integer.parseInt(e));                        
-                    }
-                }
-                return datosTempPow;             
-            case "\"hash\"":
-                List<Double> datosHash = new ArrayList<Double>();
-                for (String e : lista) {
-                    if(e.equals("")){
-                        datosHash.add(0.00);
-                    }else{
-                        datosHash.add((Integer.parseInt(e)/1000000.00));
-                    }
-                }
-                return datosHash;     
-            case "\"efi\"": 
-                List<Integer> datosEfi = new ArrayList<Integer>();
-                for (String e : lista) {
-                    if(e.equals("")){
-                        datosEfi.add(0);
-                    }else{
-                        String replaced = e.replaceAll("\"", "").replaceAll("kH/W", "");
-                        datosEfi.add(Integer.parseInt(replaced));                        
-                    }
-                }
-                return datosEfi;     
-        }        
-        return null;
-    }
-
+ 
     @OnClose
     public void onClose(Session _session) {
 
     }
 
-    private void sendMessageSession(String cadena, String comando, Session sesion) {
+    private void sendMessageSession(String cadena, String comando, Session sesion, String tipo) {
         try {
             String json = "{\"cmnd\": \"" + comando + "\", \"values\": " + cadena + " }";
+            
             System.out.println("El JSON q se manda es " + json);
             sesion.getBasicRemote().sendText(json);
         } catch (IOException ex) {
