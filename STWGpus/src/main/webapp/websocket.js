@@ -65,6 +65,11 @@ function openSocket() {
             case "listaDatosHash":
                 drawPrices(json.values);
                 break;
+            case "listaDatosTempAmbiente":
+                console.log("holi, he llegao"+json.values)
+                drawPrices(json.values);
+                break;
+
 
         }
 
@@ -115,7 +120,7 @@ function initGrafica(tipoGrafica) {
             curveType: 'function',
             legend: {position: 'bottom'}
         };
-    } else if (tipoGrafica == "temp") {
+    } else if (tipoGrafica == "temp" || tipoGrafica =="tempAmbiente") {
         datosGrafica.addColumn('number', 'ºC');
         optionsGrafico = {
             chart: {title: 'ºC'},
@@ -182,18 +187,23 @@ function closeSocket() {
 }
 
 
-
-
-
 function prueba() {
     var graficaSeleccionada = document.getElementById("tipoGrafica").value;
+    var fecha = document.getElementById("current_date").value;
+    
     initGrafica(graficaSeleccionada)
-    webSocket.send("{\"comando\": \"tipoGrafica\", \"values\": \"" + graficaSeleccionada + "\" }");
+    if (fecha == ""){
+        const tiempoTranscurrido = Date.now(); 
+        const hoy = new Date(tiempoTranscurrido);
+        console.log("Hoy:" + hoy.toISOString().split('T')[0]);
+        webSocket.send("{\"comando\": \"tipoGrafica\", \"values\": \"" + graficaSeleccionada + "\", \"fecha\": \"" + hoy.toISOString().split('T')[0] +"\" }");
+    }else{
+        console.log("G:" + fecha);
+
+        webSocket.send("{\"comando\": \"tipoGrafica\", \"values\": \"" + graficaSeleccionada + "\", \"fecha\": \"" + fecha +"\" }");
+    }
+    
 }
 
-function pruebaUsu() {
-    var graficaSeleccionada = document.getElementById("tipoGraficaUsu").value;
-    initGrafica(graficaSeleccionada)
-    webSocket.send("{\"comando\": \"tipoGrafica\", \"values\": \"" + graficaSeleccionada + "\" }");
-}
+
 

@@ -42,8 +42,6 @@ public class DatosNodo implements Serializable {
     private String hashrate;
     private String powerGPU;
     private String temperature;
-    private String solved_count;
-    private String rejected_count;
     private String thermometer;
     private String power;
 
@@ -75,13 +73,6 @@ public class DatosNodo implements Serializable {
         this.temperature = temperature;
     }
 
-    public void setSolved_count(String solved_count) {
-        this.solved_count = solved_count;
-    }
-
-    public void setRejected_count(String rejected_count) {
-        this.rejected_count = rejected_count;
-    }
 
     public void setThermometer(String thermometer) {
         this.thermometer = thermometer;
@@ -133,13 +124,6 @@ public class DatosNodo implements Serializable {
         return temperature;
     }
 
-    public String getSolved_count() {
-        return solved_count;
-    }
-
-    public String getRejected_count() {
-        return rejected_count;
-    }
 
     public String getThermometer() {
         return thermometer;
@@ -151,7 +135,7 @@ public class DatosNodo implements Serializable {
 
     @Override
     public String toString() {
-        return "DatosNodo{" + "id=" + id + ", fecha=" + fecha + ", name=" + name + ", efficiency=" + efficiency + ", hashrate=" + hashrate + ", powerGPU=" + powerGPU + ", temperature=" + temperature + ", solved_count=" + solved_count + ", rejected_count=" + rejected_count + ", thermometer=" + thermometer + ", power=" + power + '}';
+        return "DatosNodo{" + "id=" + id + ", fecha=" + fecha + ", name=" + name + ", efficiency=" + efficiency + ", hashrate=" + hashrate + ", powerGPU=" + powerGPU + ", temperature=" + temperature + ", thermometer=" + thermometer + ", power=" + power + '}';
     }
 
   

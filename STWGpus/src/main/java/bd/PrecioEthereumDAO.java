@@ -5,6 +5,7 @@
  */
 package bd;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +34,7 @@ public class PrecioEthereumDAO extends AbstractFacade<PrecioEthereum> {
         super(PrecioEthereum.class);
     }
 
-    public List<PrecioEthereum> obtenerPreciosEth() {
+    public List<PrecioEthereum> obtenerPreciosEth(Date fecha) {
         Date date = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(date);
@@ -41,7 +42,23 @@ public class PrecioEthereumDAO extends AbstractFacade<PrecioEthereum> {
         c.add(Calendar.DATE, -i - 7);
         Date start = c.getTime();
         Query query = em.createQuery("SELECT e FROM PrecioEthereum e"); 
+        
+        List<PrecioEthereum> datosEthereum = query.getResultList();
+        List<PrecioEthereum> auxDatosEthereum = new ArrayList();
 
-        return query.getResultList();
+        Calendar cal1 = Calendar.getInstance(); 
+        Calendar cal2 = Calendar.getInstance(); 
+        
+
+        
+        for (PrecioEthereum d : datosEthereum) {
+            System.out.println("f: " + d.toString());
+            cal1.setTime(d.getFecha()); 
+            cal2.setTime(fecha); 
+            if (cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)){
+                auxDatosEthereum.add(d);
+            }
+        }
+        return auxDatosEthereum;
     }
 }

@@ -5,6 +5,7 @@
  */
 package bd;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +34,7 @@ public class DatosNodoDAO extends AbstractFacade<DatosNodo> {
         super(DatosNodo.class);
     }
 
-    public List<DatosNodo> obtenerDatosNodo() {
+    public List<DatosNodo> obtenerDatosNodo(Date fecha) {
         Date date = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(date);
@@ -43,8 +44,25 @@ public class DatosNodoDAO extends AbstractFacade<DatosNodo> {
         Query query = null;
 
         query = em.createQuery("SELECT e FROM DatosNodo e");
+        
+        List<DatosNodo> datosNodo = query.getResultList();
+        List<DatosNodo> auxDatosNodo = new ArrayList();
 
-        return query.getResultList();
+        Calendar cal1 = Calendar.getInstance(); 
+        Calendar cal2 = Calendar.getInstance(); 
+        
+
+        
+        for (DatosNodo d : datosNodo) {
+            System.out.println("f: " + d.toString());
+            cal1.setTime(d.getFecha()); 
+            cal2.setTime(fecha); 
+            if (cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)){
+                auxDatosNodo.add(d);
+            }
+        }
+        return auxDatosNodo;
+
     }
 
 }

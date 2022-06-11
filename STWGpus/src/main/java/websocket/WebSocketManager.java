@@ -9,13 +9,20 @@ import bd.PrecioEthereum;
 import bd.PrecioEthereumDAO;
 import bd.PrecioLuz;
 import bd.PrecioLuzDAO;
+import bd.TemperaturaAmbienteDTO;
 import bd.TemperaturaDTO;
 import java.io.IOException;
 import java.util.List;
 import com.google.gson.Gson;
 import java.io.StringReader;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -40,7 +47,6 @@ public class WebSocketManager {
     private Session session; // última session establecida. No sabemos a quién pertenece.
     // en realidad solo la queremos para poder usar el 
     // método "getOpenSessions()"
-
     @EJB
     PrecioLuzDAO precioLuzDB;
     @EJB
@@ -56,71 +62,85 @@ public class WebSocketManager {
     }
 
     @OnMessage
-    public String onMessage(Session sesion, String message) {
+    public String onMessage(Session sesion, String message) throws IOException, InterruptedException, ParseException {
         System.out.println("[!] Recibo ===  de la sesion " + sesion.getId() + " el mensaje " + message);
         JsonReader jsonReader = Json.createReader(new StringReader(message));
         JsonObject obj = jsonReader.readObject();
         String accion = "";
         String jsonCadena = "";
-        String valueFecha = "";
 
         String tipo = obj.get("values").toString();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fecha = obj.get("fecha").toString().replaceAll("\"", "");
+        System.out.println("valuefecha" + fecha);
+
+        Date valueFecha = sdf.parse(fecha);
         System.out.println(tipo);
         switch (tipo) {
             case "\"luz\"":
-                List<PrecioLuz> listaPreciosLuz = precioLuzDB.obtenerPreciosLuz();
-                sendMessageSession(gson.toJson(listaPreciosLuz, List.class), "datePrecioLuzResult", sesion, tipo);
+                List<PrecioLuz> listaPreciosLuz = precioLuzDB.obtenerPreciosLuz(valueFecha);
+                sendMessageSession(gson.toJson(listaPreciosLuz, List.class), "datePrecioLuzResult", sesion);
                 break;
             case "\"eth\"":
-                List<PrecioEthereum> listaPreciosEth = precioEthDB.obtenerPreciosEth();
-                sendMessageSession(gson.toJson(listaPreciosEth, List.class), "datePrecioEthResult", sesion, tipo);
+                List<PrecioEthereum> listaPreciosEth = precioEthDB.obtenerPreciosEth(valueFecha);
+                sendMessageSession(gson.toJson(listaPreciosEth, List.class), "datePrecioEthResult", sesion);
                 break;
             case "\"temp\"":
-                List<DatosNodo> listaDatosTemp =datosNodoDB.obtenerDatosNodo();
+                List<DatosNodo> listaDatosTemp = datosNodoDB.obtenerDatosNodo(valueFecha);
                 List<TemperaturaDTO> listaTempDTO = new ArrayList();
                 for (DatosNodo datosNodo : listaDatosTemp) {
                     listaTempDTO.add(new TemperaturaDTO(datosNodo.getFecha(), datosNodo.getTemperature()));
                 }
-                sendMessageSession(gson.toJson(listaTempDTO, List.class), "listaDatosTemp", sesion, tipo);
-                break;             
+                sendMessageSession(gson.toJson(listaTempDTO, List.class), "listaDatosTemp", sesion);
+                break;
             case "\"efi\"":
-                List<DatosNodo> listaDatosEfi = datosNodoDB.obtenerDatosNodo();
+                List<DatosNodo> listaDatosEfi = datosNodoDB.obtenerDatosNodo(valueFecha);
                 List<EficienciaDTO> listaEfiDTO = new ArrayList();
                 for (DatosNodo datosNodo : listaDatosEfi) {
                     listaEfiDTO.add(new EficienciaDTO(datosNodo.getFecha(), datosNodo.getEfficiency()));
                 }
-                sendMessageSession(gson.toJson(listaEfiDTO, List.class), "listaDatosEfi", sesion, tipo);
-                break;             
+                sendMessageSession(gson.toJson(listaEfiDTO, List.class), "listaDatosEfi", sesion);
+                break;
             case "\"watt\"":
-                List<DatosNodo> listaDatosPower = datosNodoDB.obtenerDatosNodo();
+                List<DatosNodo> listaDatosPower = datosNodoDB.obtenerDatosNodo(valueFecha);
                 List<PowerDTO> listaPowerDTO = new ArrayList();
                 for (DatosNodo datosNodo : listaDatosPower) {
                     listaPowerDTO.add(new PowerDTO(datosNodo.getFecha(), datosNodo.getPower()));
                 }
-                sendMessageSession(gson.toJson(listaPowerDTO, List.class), "listaDatosPower", sesion, tipo);
-                break;             
+                sendMessageSession(gson.toJson(listaPowerDTO, List.class), "listaDatosPower", sesion);
+                break;
             case "\"hash\"":
-                List<DatosNodo> listaDatosHash = datosNodoDB.obtenerDatosNodo();
+                List<DatosNodo> listaDatosHash = datosNodoDB.obtenerDatosNodo(valueFecha);
                 List<HashrateDTO> listaHashDTO = new ArrayList();
                 for (DatosNodo datosNodo : listaDatosHash) {
                     listaHashDTO.add(new HashrateDTO(datosNodo.getFecha(), datosNodo.getHashrate()));
                 }
-                sendMessageSession(gson.toJson(listaHashDTO, List.class), "listaDatosHash", sesion, tipo);
-                break;                  
+                sendMessageSession(gson.toJson(listaHashDTO, List.class), "listaDatosHash", sesion);
+                break;
+            case "\"tempAmbiente\"":
+                List<DatosNodo> listaDatosTempAmbiente = datosNodoDB.obtenerDatosNodo(valueFecha);
+                List<TemperaturaAmbienteDTO> listaTempAmbienteDTO = new ArrayList();
+                for (DatosNodo datosNodo : listaDatosTempAmbiente) {
+                    listaTempAmbienteDTO.add(new TemperaturaAmbienteDTO(datosNodo.getFecha(), datosNodo.getThermometer()));
+                }
+                for (TemperaturaAmbienteDTO temperaturaAmbienteDTO : listaTempAmbienteDTO) {
+                    System.out.println(temperaturaAmbienteDTO.toString());
+                }
+                sendMessageSession(gson.toJson(listaTempAmbienteDTO, List.class), "listaDatosTempAmbiente", sesion);
+                break;
         }
         return message;
     }
-    
- 
+
     @OnClose
     public void onClose(Session _session) {
 
     }
 
-    private void sendMessageSession(String cadena, String comando, Session sesion, String tipo) {
+    private void sendMessageSession(String cadena, String comando, Session sesion) {
         try {
             String json = "{\"cmnd\": \"" + comando + "\", \"values\": " + cadena + " }";
-            
+
             System.out.println("El JSON q se manda es " + json);
             sesion.getBasicRemote().sendText(json);
         } catch (IOException ex) {
@@ -151,4 +171,5 @@ public class WebSocketManager {
             }
         }
     }
+
 }

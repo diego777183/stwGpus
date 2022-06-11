@@ -7,6 +7,7 @@ package bd;
 
 import bd.AbstractFacade;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +36,7 @@ public class PrecioLuzDAO extends AbstractFacade<PrecioLuz> {
         super(PrecioLuz.class);
     }
 
-    public List<PrecioLuz> obtenerPreciosLuz() {
+    public List<PrecioLuz> obtenerPreciosLuz(Date fecha) {
 
         Date date = new Date();
         Calendar c = Calendar.getInstance();
@@ -47,7 +48,23 @@ public class PrecioLuzDAO extends AbstractFacade<PrecioLuz> {
         Query query = em.createQuery("SELECT e FROM PrecioLuz e"); 
         System.out.println("adios");
 
-        return query.getResultList();
+        List<PrecioLuz> datosLuz = query.getResultList();
+        List<PrecioLuz> auxDatosEthereum = new ArrayList();
+
+        Calendar cal1 = Calendar.getInstance(); 
+        Calendar cal2 = Calendar.getInstance(); 
+        
+
+        
+        for (PrecioLuz d : datosLuz) {
+            System.out.println("f: " + d.toString());
+            cal1.setTime(d.getFecha()); 
+            cal2.setTime(fecha); 
+            if (cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)){
+                auxDatosEthereum.add(d);
+            }
+        }
+        return auxDatosEthereum;
     }
 
 }

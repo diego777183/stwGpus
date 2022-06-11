@@ -38,6 +38,10 @@ public class PrecioLuz implements Serializable {
     private Date fecha;
     private Double precio;
 
+    public Date getFecha() {
+        return fecha;
+    }
+
 
 
 

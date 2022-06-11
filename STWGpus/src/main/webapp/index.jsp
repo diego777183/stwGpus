@@ -40,12 +40,15 @@
             <br>
             <script type="text/javascript" src="websocket.js"></script>
 
-            <select name="color" id="tipoGrafica" onchange="prueba();">
+            <select name="color" id="tipoGrafica" onchange="">
                 <option value="nada"> </option>    
                 <option value="luz">Gráfico de Precios de la Luz</option>
                 <option value="eth">Gráfico de Precios de Ethereum</option>
             </select>
+            <input type="date" id="current_date" name="current_date" value="" min="2022-06-6">
+            <button onclick="prueba();">Buscar</button>
         </div>
+
         <br><br><br><br>
         <div style="margin-left: 1600px;margin-top: -150px">
             <form method="POST" action="<%=response.encodeURL("login")%>">
@@ -74,7 +77,7 @@
         </div>
 
         <div id="graficaLuz"></div>  
-     
+
         <script type="text/javascript">
             google.charts.load('current', {'packages': ['corechart'], language: 'es'});
 

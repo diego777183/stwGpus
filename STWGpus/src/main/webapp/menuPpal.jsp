@@ -60,7 +60,7 @@
         <%@include file="WEB-INF/jspf/cabecera.jspf" %>
 
         <div style="background-color: red; color:white; font-size:large;">${msg}</div>
-        <p>Hola <%=usuario.getNombre()%> </p>
+        <p style="margin-left: 25px;" >Hola <%=usuario.getNombre()%> </p>
 
         <div style="margin-left: 25px;">
             <h3>Seleccione que quiere visualizar</h3>
@@ -68,14 +68,19 @@
             <br>
             <script type="text/javascript" src="websocket.js"></script>
 
-            <select name="color" id="tipoGraficaUsu" onchange="pruebaUsu();">
+            <select name="color" id="tipoGrafica"">
                 <option value="nada"> </option>    
                 <option value="temp">Gráfico de temperatura de la gráfica</option>
                 <option value="efi">Gráfico de la eficiencia H/w</option>
                 <option value="watt">Gráfico del consumo</option>
                 <option value="hash">Gráfico hashrate</option>
-
+                <option value="tempAmbiente">Gráfico de la temperatura del ambiente</option>
             </select>
+
+            <input type="date" id="current_date" name="current_date" value="" min="2022-06-6">
+            <button onclick="prueba();">Buscar</button>
+
+
         </div>
 
         <div id="graficaLuz"></div>  
@@ -90,9 +95,12 @@
              });*/
             google.charts.setOnLoadCallback(initGrafica);
             //google.charts.setOnLoadCallback(initCo2GraphLog);
-
         </script>
-
+        <br><br>
+        <div>
+            <button style="margin-left: 25px;" onclick="<%=response.encodeURL("getTemperatura")%>">Actualizar Temperatura</button>
+            <h3 style="margin-left: 80px;"" id="temperaturaActual"></h3>
+        </div>
         <%
             session.setAttribute("msg", null);
         %>

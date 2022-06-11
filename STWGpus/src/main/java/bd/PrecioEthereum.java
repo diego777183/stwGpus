@@ -49,14 +49,10 @@ public class PrecioEthereum implements Serializable {
         this.precio = precio;
     }
 
+    public Date getFecha() {
+        return fecha;
+    }
 
-
-    
-   
-    
- 
- 
-    
     
     public Double getPrecio() {
         return precio;
