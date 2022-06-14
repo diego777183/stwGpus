@@ -12,7 +12,7 @@ import java.util.Locale;
 
 /**
  *
- * @author Félix
+ * @author Diego Santome
  */
 public class Util {
     

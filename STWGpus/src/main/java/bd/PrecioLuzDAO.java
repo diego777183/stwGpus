@@ -18,7 +18,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author fsern
+ * @author Fernando Revilla
  */
 @Stateless
 
@@ -53,14 +53,14 @@ public class PrecioLuzDAO extends AbstractFacade<PrecioLuz> {
 
         Calendar cal1 = Calendar.getInstance(); 
         Calendar cal2 = Calendar.getInstance(); 
-        
-
-        
+                
         for (PrecioLuz d : datosLuz) {
             System.out.println("f: " + d.toString());
             cal1.setTime(d.getFecha()); 
             cal2.setTime(fecha); 
-            if (cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)){
+            if (cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) 
+                    && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)){
+                
                 auxDatosEthereum.add(d);
             }
         }

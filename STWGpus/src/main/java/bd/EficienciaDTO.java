@@ -1,14 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package bd;
 
 import java.util.Date;
 
 /**
  *
- * @author Diego
+ * @author Alberto Perez
  */
 public class EficienciaDTO {
     private Date fecha;
@@ -20,7 +17,8 @@ public class EficienciaDTO {
         if(precio.equals("")){
             this.precio = 0;
         }else{
-            this.precio = Integer.valueOf(precio.replaceAll("kH/W", "").replaceAll("\"", ""));
+            this.precio = Integer.valueOf(precio.replaceAll("kH/W", "")
+                    .replaceAll("\"", ""));
         }
     }
 }

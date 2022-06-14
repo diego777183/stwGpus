@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package servlet;
 
 import bd.Usuario;
@@ -27,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author fsern
+ * @author Diego Santome
  */
 @WebServlet(name = "getTemperatura", urlPatterns = {"/getTemperatura"})
 public class ActualizarTemperatura extends HttpServlet {

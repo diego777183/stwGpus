@@ -1,3 +1,8 @@
+/**
+ * 
+ * @author Diego Santome, Alberto Perez y Fernando _Revilla
+ */
+
 var wsUri = "ws://" + document.location.host + "/STWGpus/stwGpus";
 var webSocket;
 
@@ -69,11 +74,7 @@ function openSocket() {
                 console.log("holi, he llegao"+json.values)
                 drawPrices(json.values);
                 break;
-
-
         }
-
-
     };
 
     webSocket.onclose = function (event) {
@@ -86,12 +87,10 @@ function openSocket() {
 } //openSocket
 
 
-
-
-
 function initGrafica(tipoGrafica) {
     console.log("HEEE");
-    grafica = new google.visualization.LineChart(document.getElementById('graficaLuz'));
+    grafica = new google.visualization.
+            LineChart(document.getElementById('graficaLuz'));
     datosGrafica = new google.visualization.DataTable();
     datosGrafica.addColumn('string', 'Hora');
 
@@ -196,11 +195,14 @@ function prueba() {
         const tiempoTranscurrido = Date.now(); 
         const hoy = new Date(tiempoTranscurrido);
         console.log("Hoy:" + hoy.toISOString().split('T')[0]);
-        webSocket.send("{\"comando\": \"tipoGrafica\", \"values\": \"" + graficaSeleccionada + "\", \"fecha\": \"" + hoy.toISOString().split('T')[0] +"\" }");
+        webSocket.send("{\"comando\": \"tipoGrafica\", \"values\": \"" + 
+                graficaSeleccionada + "\", \"fecha\": \"" + 
+                hoy.toISOString().split('T')[0] +"\" }");
     }else{
         console.log("G:" + fecha);
 
-        webSocket.send("{\"comando\": \"tipoGrafica\", \"values\": \"" + graficaSeleccionada + "\", \"fecha\": \"" + fecha +"\" }");
+        webSocket.send("{\"comando\": \"tipoGrafica\", \"values\": \"" + 
+                graficaSeleccionada + "\", \"fecha\": \"" + fecha +"\" }");
     }
     
 }

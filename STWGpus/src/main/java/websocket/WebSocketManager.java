@@ -38,7 +38,7 @@ import javax.websocket.server.ServerEndpoint;
 
 /**
  *
- * @author fserna
+ * @author Alberto Perez, Fernando Revilla y Alberto Perez
  */
 @Stateless
 @ServerEndpoint("/stwGpus")

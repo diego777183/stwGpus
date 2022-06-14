@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/J2EE/EJB30/StatelessEjbClass.java to edit this template
- */
+
 package timer;
 
 import bd.DatosNodo;
@@ -29,7 +26,7 @@ import javax.ws.rs.client.WebTarget;
 
 /**
  *
- * @author Diego
+ * @author Diego Santome, Alberto Perez y Fernando _Revilla
  */
 @Stateless
 public class TimerGetData {

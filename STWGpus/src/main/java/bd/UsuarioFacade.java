@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package bd;
-
-
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -14,7 +8,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author fsern
+ * @author Diego Santome
  */
 @Stateless
 public class UsuarioFacade extends AbstractFacade<Usuario> {
@@ -31,9 +25,6 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     public UsuarioFacade() {
         super(Usuario.class);
     }
-    
-    
-    
     
     public Usuario checkAutenticacion (String _login, String _pwd){
         Usuario usuario = null;

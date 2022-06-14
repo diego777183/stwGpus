@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package servlet;
 
 import bd.Usuario;
@@ -18,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author fsern
+ * @author Diego Santome
  */
 @WebServlet(name = "ModificarUsuario", urlPatterns = {"/modificarUsuario"})
 public class ModificarUsuario extends HttpServlet {
@@ -37,10 +33,11 @@ public class ModificarUsuario extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        request.setCharacterEncoding("UTF-8"); // <<=== NECESARIO para que funcionen las tildes, Ñs, etc... 
+        request.setCharacterEncoding("UTF-8"); 
+// <<=== NECESARIO para que funcionen las tildes, Ñs, etc... 
         HttpSession session = request.getSession();
         
-        Long id         = (Long)(session.getAttribute("idUsuario"));
+        Long id = (Long)(session.getAttribute("idUsuario"));
         
         if (id!=null){
             String login    = request.getParameter("login");
@@ -60,7 +57,6 @@ public class ModificarUsuario extends HttpServlet {
 
                 System.out.println("==b==> "+u.toJson());
             }
-
 
             request.getSession().setAttribute("msg", "El usuario '"+u.getLogin()+"' ha sido modificado.");
             response.sendRedirect(response.encodeURL("verMensajesRecibidos.jsp"));

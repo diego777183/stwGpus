@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
  *
- * @author Diego
+ * @author Diego Santome
  */
 public class TemperaturaDTO {
     private Date fecha;

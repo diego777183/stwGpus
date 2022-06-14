@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package bd;
 
 import java.util.ArrayList;
@@ -16,7 +12,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author fsern
+ * @author Alberto Perez
  */
 @Stateless
 
@@ -57,7 +53,10 @@ public class DatosNodoDAO extends AbstractFacade<DatosNodo> {
             System.out.println("f: " + d.toString());
             cal1.setTime(d.getFecha()); 
             cal2.setTime(fecha); 
-            if (cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)){
+            if (cal1.get(Calendar.DAY_OF_YEAR) == 
+                    cal2.get(Calendar.DAY_OF_YEAR) && 
+                    cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)){
+                
                 auxDatosNodo.add(d);
             }
         }

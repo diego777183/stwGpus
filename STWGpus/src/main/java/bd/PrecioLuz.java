@@ -25,7 +25,7 @@ import javax.persistence.ManyToOne;
 
 /**
  *
- * @author fserna
+ * @author Fernando Revilla
  */
 @Entity
 public class PrecioLuz implements Serializable {
@@ -41,11 +41,6 @@ public class PrecioLuz implements Serializable {
     public Date getFecha() {
         return fecha;
     }
-
-
-
-
-    
 
     public Long getId() {
         return id;

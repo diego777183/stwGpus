@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 package servlet;
 
 import bd.Usuario;
@@ -17,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author usuario
+ * @author Diego Santome
  */
 @WebServlet(name = "Login", urlPatterns = {"/login"})
 public class Login extends HttpServlet {
