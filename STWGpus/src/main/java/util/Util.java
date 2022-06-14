@@ -16,8 +16,6 @@ import java.util.Locale;
  */
 public class Util {
     
-
-    
     public static String getFormatted(double _value, int _numDecimals){
         DecimalFormat df = new DecimalFormat("0", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
         df.setMaximumFractionDigits(_numDecimals);
