@@ -18,7 +18,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Fernando Revilla
+ * @author Alberto Pérez
  */
 @Stateless
 

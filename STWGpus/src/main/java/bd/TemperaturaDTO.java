@@ -1,14 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package bd;
 
 import java.util.Date;
 
 /**
  *
- * @author Diego Santome
+ * @author Fernando Revilla
  */
 public class TemperaturaDTO {
     private Date fecha;

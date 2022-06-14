@@ -1,7 +1,7 @@
 <%-- 
     Document   : addUsuario
     Created on : 20-may-2022, 11:29:48
-    Author     : Diego Santomé
+    Author     : Diego Santomé, Fernando Revilla y Alberto Pérez
 --%>
 
 

@@ -25,7 +25,7 @@ import javax.persistence.ManyToOne;
 
 /**
  *
- * @author Alberto Pérez
+ * @author Fernando Revilla
  */
 @Entity
 public class DatosNodo implements Serializable {

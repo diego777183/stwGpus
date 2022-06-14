@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  *
- * @author Alberto Perez
+ * @author Fernando Revilla
  */
 public class PowerDTO {
 
