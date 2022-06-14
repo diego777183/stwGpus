@@ -50,7 +50,6 @@ public class DatosNodoDAO extends AbstractFacade<DatosNodo> {
 
         
         for (DatosNodo d : datosNodo) {
-            System.out.println("f: " + d.toString());
             cal1.setTime(d.getFecha()); 
             cal2.setTime(fecha); 
             if (cal1.get(Calendar.DAY_OF_YEAR) == 

@@ -108,9 +108,6 @@ public class ActualizarTemperatura extends HttpServlet {
 
         JsonReader jsonReader = Json.createReader(new StringReader(response.body()));
         JsonObject json = jsonReader.readObject();
-        System.out.println("QQQ");
-        System.out.println(json.get("thermometer").toString().replaceAll("\"\"", ""));
-        System.out.println(">>>");
         double temp = Double.valueOf(json.get("thermometer").toString().replaceAll("\"", "")) / 1000;
 
         return (String.format("%.2f", temp) + " ºC");

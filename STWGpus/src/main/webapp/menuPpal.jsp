@@ -96,11 +96,7 @@
             google.charts.setOnLoadCallback(initGrafica);
             //google.charts.setOnLoadCallback(initCo2GraphLog);
         </script>
-        <br><br>
-        <div>
-            <button style="margin-left: 25px;" onclick="<%=response.encodeURL("getTemperatura")%>">Actualizar Temperatura</button>
-            <h3 style="margin-left: 80px;"" id="temperaturaActual"></h3>
-        </div>
+       
         <%
             session.setAttribute("msg", null);
         %>

@@ -42,10 +42,9 @@ public class TimerGetData {
     public final static String URL_ETHEREUM = "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd";
     public final static String URL_ENERGY = "https://api.preciodelaluz.org/v1/prices/now?zone=PCB";
 
-    @Schedule(hour = "*", persistent = false)
+    @Schedule(hour="*/5", persistent = false)
 
     public void myTimer() throws IOException, InterruptedException {
-        System.out.println("COJO DATOS");
         addEthereumPrice();
         addNodeData();
         addLightPrice();
@@ -63,7 +62,6 @@ public class TimerGetData {
         JsonReader jsonReader = Json.createReader(new StringReader(response.body()));
         JsonObject json = jsonReader.readObject();
         DatosNodo datosNodo = new DatosNodo();
-        System.out.println(json.get("gpus").toString());
         datosNodo.setFecha();
         
         JsonObject jsonNode = (JsonObject) json.get("gpus");
@@ -117,7 +115,6 @@ public class TimerGetData {
         JsonReader jsonReader = Json.createReader(new StringReader(response.body()));
         JsonObject json = jsonReader.readObject();
         JsonObject json2 = (JsonObject) json.get("ethereum");
-        System.out.println(json2);
         return Double.parseDouble(json2.get("usd").toString());
     }
 
@@ -126,8 +123,6 @@ public class TimerGetData {
         p.setFecha();
         p.setPrecio(obtenerPrecioLuzAPI());
         try {
-            System.out.println("GUARDO LUZ");
-            System.out.println(p.getPrecio());
             precioLuzDB.create(p);
         } catch (Exception e) {
             e.printStackTrace();

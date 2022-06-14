@@ -63,7 +63,6 @@ public class WebSocketManager {
 
     @OnMessage
     public String onMessage(Session sesion, String message) throws IOException, InterruptedException, ParseException {
-        System.out.println("[!] Recibo ===  de la sesion " + sesion.getId() + " el mensaje " + message);
         JsonReader jsonReader = Json.createReader(new StringReader(message));
         JsonObject obj = jsonReader.readObject();
         String accion = "";
@@ -72,10 +71,8 @@ public class WebSocketManager {
         String tipo = obj.get("values").toString();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String fecha = obj.get("fecha").toString().replaceAll("\"", "");
-        System.out.println("valuefecha" + fecha);
 
         Date valueFecha = sdf.parse(fecha);
-        System.out.println(tipo);
         switch (tipo) {
             case "\"luz\"":
                 List<PrecioLuz> listaPreciosLuz = precioLuzDB.obtenerPreciosLuz(valueFecha);
@@ -123,9 +120,6 @@ public class WebSocketManager {
                 for (DatosNodo datosNodo : listaDatosTempAmbiente) {
                     listaTempAmbienteDTO.add(new TemperaturaAmbienteDTO(datosNodo.getFecha(), datosNodo.getThermometer()));
                 }
-                for (TemperaturaAmbienteDTO temperaturaAmbienteDTO : listaTempAmbienteDTO) {
-                    System.out.println(temperaturaAmbienteDTO.toString());
-                }
                 sendMessageSession(gson.toJson(listaTempAmbienteDTO, List.class), "listaDatosTempAmbiente", sesion);
                 break;
         }
@@ -141,7 +135,6 @@ public class WebSocketManager {
         try {
             String json = "{\"cmnd\": \"" + comando + "\", \"values\": " + cadena + " }";
 
-            System.out.println("El JSON q se manda es " + json);
             sesion.getBasicRemote().sendText(json);
         } catch (IOException ex) {
             Logger.getLogger(WebSocketManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -160,7 +153,6 @@ public class WebSocketManager {
             json += "\"" + u + "\"";
         }
         json += "]}";
-        System.out.println(json);
 
         if (session != null) {
             try {

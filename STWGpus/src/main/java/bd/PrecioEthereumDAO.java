@@ -46,7 +46,6 @@ public class PrecioEthereumDAO extends AbstractFacade<PrecioEthereum> {
         Calendar cal2 = Calendar.getInstance(); 
                 
         for (PrecioEthereum d : datosEthereum) {
-            System.out.println("f: " + d.toString());
             cal1.setTime(d.getFecha()); 
             cal2.setTime(fecha); 
             if (cal1.get(Calendar.DAY_OF_YEAR) == 

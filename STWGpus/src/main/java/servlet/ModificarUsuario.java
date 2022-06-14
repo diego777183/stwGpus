@@ -47,7 +47,6 @@ public class ModificarUsuario extends HttpServlet {
             
             Usuario u = usuarioDAO.find(id);
             if (u!=null){
-                System.out.println("==a==> "+u.toJson());
                 u.setId(id);
                 u.setLogin(login);
                 u.setPassword(pwd);
@@ -55,7 +54,6 @@ public class ModificarUsuario extends HttpServlet {
                 u.setAp1(ap1);
                 usuarioDAO.edit(u);
 
-                System.out.println("==b==> "+u.toJson());
             }
 
             request.getSession().setAttribute("msg", "El usuario '"+u.getLogin()+"' ha sido modificado.");
