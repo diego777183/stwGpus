@@ -14,7 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 /**
  *
@@ -32,7 +31,6 @@ public class Usuario implements Serializable {
     private String password;
     private String nombre;
     private String ap1;
-    private Double saldo;
     
     public Long getId() {
         return id;
@@ -74,16 +72,6 @@ public class Usuario implements Serializable {
         this.ap1 = _ap1;
     }
 
-    public Double getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(Double _saldo) {
-        this.saldo = _saldo;
-    }
-    
-    
-
 
     @Override
     public int hashCode() {
@@ -104,24 +92,8 @@ public class Usuario implements Serializable {
         }
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "demo.bd.Cliente[ id=" + id + " ]";
-    }
-    
     
     public String toJson(){
         return new Gson().toJson(this);
-    }
-    
-    
-    
-    public boolean soyAdmin(){
-        boolean soyAdmin = false;
-        if (this.login.equals("admin")){
-            soyAdmin=true;
-        }
-        return soyAdmin;
     }
 }

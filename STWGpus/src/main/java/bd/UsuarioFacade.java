@@ -37,7 +37,6 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
                 usuario.setPassword("istrador");
                 usuario.setNombre("Adminis");
                 usuario.setAp1("trador");
-                usuario.setSaldo(0.0);
                 this.create(usuario);
 
         }else{

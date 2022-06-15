@@ -31,7 +31,7 @@ import javax.ws.rs.client.WebTarget;
 @Stateless
 public class TimerGetData {
 
-    private static final String BASE_URI = "http://192.168.1.59:4000/get";
+    private static final String BASE_URI = "http://88.6.76.114:4000/get";
     @EJB
     PrecioEthereumDAO precioEthDB;
     @EJB
@@ -42,7 +42,7 @@ public class TimerGetData {
     public final static String URL_ETHEREUM = "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd";
     public final static String URL_ENERGY = "https://api.preciodelaluz.org/v1/prices/now?zone=PCB";
 
-    @Schedule(hour="*/5", persistent = false)
+    @Schedule(hour="*", minute="*/5", persistent = false)
 
     public void myTimer() throws IOException, InterruptedException {
         addEthereumPrice();

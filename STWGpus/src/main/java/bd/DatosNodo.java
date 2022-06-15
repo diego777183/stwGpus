@@ -51,6 +51,7 @@ public class DatosNodo implements Serializable {
 
     public void setFecha() {
         fecha = new Date(System.currentTimeMillis());
+        System.out.println("SOY LA FECHA " + fecha.toString());
     }
 
     public void setName(String name) {
